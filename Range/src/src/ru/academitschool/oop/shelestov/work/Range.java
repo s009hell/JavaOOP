@@ -26,43 +26,30 @@ public class Range {
     }
 
     public Range getIntersection(Range range) {
-        double from;
-        double to;
-
-        if (this.to < range.from || this.from > range.to) {
+        if (this.to < range.from || this.from > range.to || this.to == range.from || range.to == this.from) {
             return null;
         }
 
-        if (this.from > range.from) {
-            from = this.from;
-        } else {
-            from = range.from;
-        }
-
-        if (this.to < range.to) {
-            to = this.to;
-        } else {
-            to = range.to;
-        }
+        double from = Math.max(this.from, range.from);
+        double to = Math.min(this.to, range.to);
 
         return (new Range(from, to));
     }
 
     public Range[] getMerge(Range range) {
-        if ((this.from < range.from || this.from == range.from) && this.to > range.to) {
-            Range[] rangeArray = new Range[2];
+        if (this.from <= range.from && this.to >= range.to) {
+            Range[] rangeArray = new Range[1];
             rangeArray[0] = this;
-            rangeArray[1] = null;
             return rangeArray;
-        } else if ((this.from > range.from || this.from == range.from) && this.to < range.to) {
+        } else if (this.from >= range.from && this.to <= range.to) {
             Range[] rangeArray = new Range[1];
             rangeArray[0] = range;
             return rangeArray;
-        } else if ((this.from < range.from && this.to < range.to && this.to > range.from) || (this.to == range.from - 1)) {
+        } else if (this.from <= range.from && this.to <= range.to && this.to >= range.from) {
             Range[] rangeArray = new Range[1];
             rangeArray[0] = new Range(this.from, range.to);
             return rangeArray;
-        } else if ((this.from > range.from && this.to > range.to && range.to > this.from) || (range.to == this.from - 1)) {
+        } else if (this.from >= range.from && this.to >= range.to && range.to >= this.from) {
             Range[] rangeArray = new Range[1];
             rangeArray[0] = new Range(range.from, this.to);
             return rangeArray;
@@ -82,8 +69,8 @@ public class Range {
     public Range[] getDifference(Range range) {
         if (this.from < range.from && this.to > range.to) {
             Range[] rangeArray = new Range[2];
-            rangeArray[0] = new Range(this.from, range.from - 1);
-            rangeArray[1] = new Range(range.to + 1, this.to);
+            rangeArray[0] = new Range(this.from, range.from);
+            rangeArray[1] = new Range(range.to, this.to);
             return rangeArray;
         } else if (this.from > range.from && this.to < range.to) {
             Range[] rangeArray = new Range[1];
@@ -91,11 +78,11 @@ public class Range {
             return rangeArray;
         } else if (this.from < range.from && this.to < range.to) {
             Range[] rangeArray = new Range[1];
-            rangeArray[0] = new Range(this.from, range.from - 1);
+            rangeArray[0] = new Range(this.from, range.from);
             return rangeArray;
         } else {
             Range[] rangeArray = new Range[1];
-            rangeArray[0] = new Range(range.to + 1, this.to);
+            rangeArray[0] = new Range(range.to, this.to);
             return rangeArray;
         }
     }
