@@ -1,42 +1,31 @@
-package src.ru.academitschool.oop.shelestov;
+package src.ru.academitschool.oop.shelestov.work;
 
-class Range {
+public class Range {
     private double from;
     private double to;
 
-    Range(double from, double to) {
+    public Range(double from, double to) {
         this.from = from;
         this.to = to;
     }
 
-    Range() {
-    }
-
-    void setFrom(double from) {
-        this.from = from;
-    }
-
-    double getFrom() {
+    public double getFrom() {
         return from;
     }
 
-    void setTo(double to) {
-        this.to = to;
-    }
-
-    double getTo() {
+    public double getTo() {
         return to;
     }
 
-    boolean isInside(double insideNumber) {
+    public boolean isInside(double insideNumber) {
         return insideNumber >= from && insideNumber <= to;
     }
 
-    double calculateLength() {
-        return to - from + 1;
+    public double calculateLength() {
+        return to - from;
     }
 
-    Range getIntersection (Range range) {
+    public Range getIntersection(Range range) {
         double from;
         double to;
 
@@ -59,56 +48,54 @@ class Range {
         return (new Range(from, to));
     }
 
-    Range[] getMerge(Range range) {
-        Range[] rangeArray = new Range[2];
-
+    public Range[] getMerge(Range range) {
         if ((this.from < range.from || this.from == range.from) && this.to > range.to) {
+            Range[] rangeArray = new Range[2];
             rangeArray[0] = this;
             rangeArray[1] = null;
             return rangeArray;
         } else if ((this.from > range.from || this.from == range.from) && this.to < range.to) {
+            Range[] rangeArray = new Range[1];
             rangeArray[0] = range;
-            rangeArray[1] = null;
             return rangeArray;
         } else if ((this.from < range.from && this.to < range.to && this.to > range.from) || (this.to == range.from - 1)) {
-            Range newRange = new Range(this.from, range.to);
-            rangeArray[0] = newRange;
-            rangeArray[1] = null;
+            Range[] rangeArray = new Range[1];
+            rangeArray[0] = new Range(this.from, range.to);
             return rangeArray;
         } else if ((this.from > range.from && this.to > range.to && range.to > this.from) || (range.to == this.from - 1)) {
-            Range newRange = new Range(range.from, this.to);
-            rangeArray[0] = newRange;
-            rangeArray[1] = null;
+            Range[] rangeArray = new Range[1];
+            rangeArray[0] = new Range(range.from, this.to);
             return rangeArray;
         } else if (this.to < range.from) {
+            Range[] rangeArray = new Range[2];
             rangeArray[0] = this;
             rangeArray[1] = range;
             return rangeArray;
         } else {
+            Range[] rangeArray = new Range[2];
             rangeArray[0] = range;
             rangeArray[1] = this;
             return rangeArray;
         }
     }
 
-    Range[] getDifference(Range range) {
-        Range[] rangeArray = new Range[2];
-
+    public Range[] getDifference(Range range) {
         if (this.from < range.from && this.to > range.to) {
+            Range[] rangeArray = new Range[2];
             rangeArray[0] = new Range(this.from, range.from - 1);
             rangeArray[1] = new Range(range.to + 1, this.to);
             return rangeArray;
         } else if (this.from > range.from && this.to < range.to) {
+            Range[] rangeArray = new Range[1];
             rangeArray[0] = new Range(0.0, 0.0);
-            rangeArray[1] = null;
             return rangeArray;
         } else if (this.from < range.from && this.to < range.to) {
+            Range[] rangeArray = new Range[1];
             rangeArray[0] = new Range(this.from, range.from - 1);
-            rangeArray[1] = null;
             return rangeArray;
         } else {
+            Range[] rangeArray = new Range[1];
             rangeArray[0] = new Range(range.to + 1, this.to);
-            rangeArray[1] = null;
             return rangeArray;
         }
     }

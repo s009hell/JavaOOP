@@ -1,4 +1,6 @@
-package src.ru.academitschool.oop.shelestov;
+package src.ru.academitschool.oop.shelestov.demo;
+
+import src.ru.academitschool.oop.shelestov.work.Range;
 
 import java.util.Scanner;
 
@@ -22,9 +24,8 @@ public class Main {
         System.out.print("Введите конечное число второго диапазона: ");
         double to2 = scanner.nextDouble();
 
-        Range range2 = new Range();
-        range2.setFrom(from2);
-        range2.setTo(to2);
+        Range range2 = new Range(from2, to2);
+
 
         System.out.println();
 
@@ -62,7 +63,7 @@ public class Main {
 
         Range[] rangeArray = range1.getMerge(range2);
 
-        if (rangeArray[1] == null) {
+        if (rangeArray.length == 1) {
             System.out.println("Результат слияния интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + ".");
         } else {
             System.out.println("Результат слияния интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + " и от " + rangeArray[1].getFrom() + " до " + rangeArray[1].getTo() + ".");
@@ -72,7 +73,7 @@ public class Main {
 
         rangeArray = range1.getDifference(range2);
 
-        if (rangeArray[1] == null) {
+        if (rangeArray.length == 1) {
             System.out.println("Результат разности интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + ".");
         } else {
             System.out.println("Результат разности интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + " и от " + rangeArray[1].getFrom() + " до " + rangeArray[1].getTo() + ".");
