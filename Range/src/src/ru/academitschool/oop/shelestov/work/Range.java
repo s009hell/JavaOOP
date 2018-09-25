@@ -30,10 +30,7 @@ public class Range {
             return null;
         }
 
-        double from = Math.max(this.from, range.from);
-        double to = Math.min(this.to, range.to);
-
-        return new Range(from, to);
+        return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
     }
 
     public Range[] getMerge(Range range) {
@@ -48,7 +45,7 @@ public class Range {
         if (this.from < range.from && this.to > range.to) {
             return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
         } else if (this.from >= range.from && this.to <= range.to) {
-            return new Range[0];
+            return null;
         } else if (this.to <= range.from || range.to <= this.from) {
             return new Range[]{new Range(this.from, this.to)};
         } else if (this.from >= range.from && this.to > range.to) {
