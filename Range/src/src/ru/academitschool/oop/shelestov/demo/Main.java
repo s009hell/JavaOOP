@@ -30,7 +30,7 @@ public class Main {
         System.out.println();
 
         System.out.println("Длина первого диапазона: от " + range1.getFrom() + " до " + range1.getTo() + " = " + range1.calculateLength());
-        System.out.println("Длина первого диапазона: от " + range2.getFrom() + " до " + range2.getTo() + " = " + range2.calculateLength());
+        System.out.println("Длина второго диапазона: от " + range2.getFrom() + " до " + range2.getTo() + " = " + range2.calculateLength());
 
         System.out.println();
 
@@ -75,8 +75,10 @@ public class Main {
 
         if (rangeArray.length == 1) {
             System.out.println("Результат разности интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + ".");
-        } else {
+        } else if (rangeArray.length == 2){
             System.out.println("Результат разности интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + " и от " + rangeArray[1].getFrom() + " до " + rangeArray[1].getTo() + ".");
+        } else {
+            System.out.println("Результат разности интервалов: 0");
         }
     }
 }
