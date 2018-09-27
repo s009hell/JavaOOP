@@ -73,8 +73,8 @@ public class Main {
 
         rangeArray = range1.getDifference(range2);
 
-        if (rangeArray == null) {
-            System.out.println("Результат разности интервалов: 0");
+        if (rangeArray.length == 0) {
+            System.out.println("Результат разности интервалов: 0.0");
         } else if (rangeArray.length == 1) {
             System.out.println("Результат разности интервалов: от " + rangeArray[0].getFrom() + " до " + rangeArray[0].getTo() + ".");
         } else {
