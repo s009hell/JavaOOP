@@ -31,7 +31,7 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return "Высота = " + getWidth() + ", ширина = " + getHeight() + ", площадь = " + getArea() + ", периметр = " + getPerimeter() + ".";
+        return "Квадрат: высота = " + getWidth() + ", ширина = " + getHeight() + ", площадь = " + getArea() + ", периметр = " + getPerimeter() + ".";
     }
 
     @Override

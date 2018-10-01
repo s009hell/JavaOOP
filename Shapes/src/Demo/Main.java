@@ -24,10 +24,22 @@ public class Main {
         shapesArray[10] = new Circle(3);
         shapesArray[11] = new Circle(7);
 
-        Arrays.sort(shapesArray, new SortByArea());
+        System.out.println("Фигура с максимальной площадью:");
+        System.out.println(getMaxArea(shapesArray));
 
-        for (Shape x : shapesArray) {
-            System.out.println(x);
-        }
+        System.out.println();
+
+        System.out.println("Фигура с вторым по величине периметром:");
+        System.out.println(getSecondPerimeter(shapesArray));
+    }
+
+    private static Shape getMaxArea(Shape[] shapes) {
+        Arrays.sort(shapes, new SortByArea());
+        return shapes[shapes.length - 1];
+    }
+
+    private static Shape getSecondPerimeter(Shape[] shapes) {
+        Arrays.sort(shapes, new SortByPerimeter());
+        return shapes[shapes.length - 2];
     }
 }
