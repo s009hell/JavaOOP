@@ -26,4 +26,9 @@ public class Square implements Shape {
     public double getPerimeter() {
         return sizeLength * 4;
     }
+
+    @Override
+    public String toString() {
+        return "Высота = " + getWidth() + ", ширина = " + getHeight() + ", площадь = " + getArea() + ", периметр = " + getPerimeter() + ".";
+    }
 }

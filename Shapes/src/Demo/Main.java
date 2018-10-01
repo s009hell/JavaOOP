@@ -10,11 +10,11 @@ public class Main {
         Square square3 = new Square(11.0);
 
         System.out.println("Первый квадрат:");
-        System.out.println("Высота = " + square1.getWidth() + ", ширина = " + square1.getHeight() + ", площадь = " + square1.getArea() + ", периметр = " + square1.getPerimeter() + ".");
+        System.out.println(square1.toString());
         System.out.println("Второй квадрат:");
-        System.out.println("Высота = " + square2.getWidth() + ", ширина = " + square2.getHeight() + ", площадь = " + square2.getArea() + ", периметр = " + square2.getPerimeter() + ".");
+        System.out.println(square2.toString());
         System.out.println("Третий квадрат:");
-        System.out.println("Высота = " + square3.getWidth() + ", ширина = " + square3.getHeight() + ", площадь = " + square3.getArea() + ", периметр = " + square3.getPerimeter() + ".");
+        System.out.println(square3.toString());
         System.out.println();
 
         Triangle triangle1 = new Triangle(0.0, 0.0, 1.0, 2.0, 0.0, 1.0);
@@ -22,11 +22,11 @@ public class Main {
         Triangle triangle3 = new Triangle(0.0, 0.0, 5.0, 4.0, 1.0, 11.0);
 
         System.out.println("Первый треугольник:");
-        System.out.println("Высота = " + triangle1.getWidth() + ", ширина = " + triangle1.getHeight() + ", площадь = " + triangle1.getArea() + ", периметр = " + triangle1.getPerimeter() + ".");
+        System.out.println(triangle1.toString());
         System.out.println("Второй треугольник:");
-        System.out.println("Высота = " + triangle2.getWidth() + ", ширина = " + triangle2.getHeight() + ", площадь = " + triangle2.getArea() + ", периметр = " + triangle2.getPerimeter() + ".");
+        System.out.println(triangle2.toString());
         System.out.println("Третий треугольник:");
-        System.out.println("Высота = " + triangle3.getWidth() + ", ширина = " + triangle3.getHeight() + ", площадь = " + triangle3.getArea() + ", периметр = " + triangle3.getPerimeter() + ".");
+        System.out.println(triangle3.toString());
         System.out.println();
     }
 }
