@@ -1,5 +1,6 @@
 package Demo;
 
+import Work.Circle;
 import Work.Rectangle;
 import Work.Square;
 import Work.Triangle;
@@ -40,6 +41,18 @@ public class Main {
         System.out.println(rectangle2.toString());
         System.out.println("Третий прямоугольник:");
         System.out.println(rectangle3.toString());
+        System.out.println();
+
+        Circle circle1 = new Circle(15);
+        Circle circle2 = new Circle(3);
+        Circle circle3 = new Circle(7);
+
+        System.out.println("Первый круг:");
+        System.out.println(circle1.toString());
+        System.out.println("Второй круг:");
+        System.out.println(circle2.toString());
+        System.out.println("Третий круг:");
+        System.out.println(circle3.toString());
         System.out.println();
     }
 }
