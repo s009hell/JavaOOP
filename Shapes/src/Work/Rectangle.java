@@ -1,5 +1,7 @@
 package Work;
 
+import java.util.Objects;
+
 public class Rectangle implements Shape {
     private double width;
     private double height;
@@ -32,5 +34,24 @@ public class Rectangle implements Shape {
     @Override
     public String toString() {
         return "Высота = " + getWidth() + ", ширина = " + getHeight() + ", площадь = " + getArea() + ", периметр = " + getPerimeter() + ".";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Rectangle rectangle = (Rectangle) o;
+        return Double.compare(rectangle.width, width) == 0 && Double.compare(rectangle.height, height) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(width, height);
     }
 }
