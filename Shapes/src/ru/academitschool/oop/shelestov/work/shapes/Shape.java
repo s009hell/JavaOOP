@@ -1,4 +1,4 @@
-package Work;
+package ru.academitschool.oop.shelestov.work.shapes;
 
 public interface Shape {
     double getWidth();

@@ -1,6 +1,4 @@
-package Work;
-
-import java.util.Objects;
+package ru.academitschool.oop.shelestov.work.shapes;
 
 public class Square implements Shape {
     private double sizeLength;
@@ -45,11 +43,12 @@ public class Square implements Shape {
         }
 
         Square square = (Square) o;
-        return Double.compare(square.sizeLength, sizeLength) == 0;
+
+        return square.sizeLength == sizeLength;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sizeLength);
+        return Double.hashCode(sizeLength);
     }
 }

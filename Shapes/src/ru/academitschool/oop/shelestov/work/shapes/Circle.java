@@ -1,6 +1,4 @@
-package Work;
-
-import java.util.Objects;
+package ru.academitschool.oop.shelestov.work.shapes;
 
 public class Circle implements Shape {
     private double radius;
@@ -45,11 +43,12 @@ public class Circle implements Shape {
         }
 
         Circle circle = (Circle) o;
-        return Double.compare(circle.radius, radius) == 0;
+
+        return circle.radius == radius;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(radius);
+        return Double.hashCode(radius);
     }
 }

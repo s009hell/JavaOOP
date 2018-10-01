@@ -1,6 +1,4 @@
-package Work;
-
-import java.util.Objects;
+package ru.academitschool.oop.shelestov.work.shapes;
 
 public class Rectangle implements Shape {
     private double width;
@@ -47,11 +45,12 @@ public class Rectangle implements Shape {
         }
 
         Rectangle rectangle = (Rectangle) o;
-        return Double.compare(rectangle.width, width) == 0 && Double.compare(rectangle.height, height) == 0;
+
+        return rectangle.width == width && rectangle.height == height;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(width, height);
+        return Double.hashCode(width + height);
     }
 }

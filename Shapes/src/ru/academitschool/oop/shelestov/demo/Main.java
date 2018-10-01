@@ -1,6 +1,8 @@
-package Demo;
+package ru.academitschool.oop.shelestov.demo;
 
-import Work.*;
+import ru.academitschool.oop.shelestov.work.comparators.SortByAreaComparator;
+import ru.academitschool.oop.shelestov.work.comparators.SortByPerimeterComparator;
+import ru.academitschool.oop.shelestov.work.shapes.*;
 
 import java.util.Arrays;
 
@@ -34,12 +36,12 @@ public class Main {
     }
 
     private static Shape getMaxArea(Shape[] shapes) {
-        Arrays.sort(shapes, new SortByArea());
+        Arrays.sort(shapes, new SortByAreaComparator());
         return shapes[shapes.length - 1];
     }
 
     private static Shape getSecondPerimeter(Shape[] shapes) {
-        Arrays.sort(shapes, new SortByPerimeter());
+        Arrays.sort(shapes, new SortByPerimeterComparator());
         return shapes[shapes.length - 2];
     }
 }
