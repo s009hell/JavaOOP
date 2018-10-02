@@ -1,30 +1,30 @@
 package ru.academitschool.oop.shelestov.work.shapes;
 
 public class Square implements Shape {
-    private double sizeLength;
+    private double sideLength;
 
-    public Square(double sizeLength) {
-        this.sizeLength = sizeLength;
+    public Square(double sideLength) {
+        this.sideLength = sideLength;
     }
 
     @Override
     public double getWidth() {
-        return sizeLength;
+        return sideLength;
     }
 
     @Override
     public double getHeight() {
-        return sizeLength;
+        return sideLength;
     }
 
     @Override
     public double getArea() {
-        return sizeLength * sizeLength;
+        return sideLength * sideLength;
     }
 
     @Override
     public double getPerimeter() {
-        return sizeLength * 4;
+        return sideLength * 4;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class Square implements Shape {
 
         Square square = (Square) o;
 
-        return square.sizeLength == sizeLength;
+        return square.sideLength == sideLength;
     }
 
     @Override
     public int hashCode() {
-        return Double.hashCode(sizeLength);
+        return Double.hashCode(sideLength);
     }
 }
