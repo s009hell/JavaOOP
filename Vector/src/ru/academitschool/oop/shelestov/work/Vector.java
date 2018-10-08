@@ -42,8 +42,13 @@ public class Vector {
         }
 
         str.append("}");
+
         return str.toString();
     }
 
-    
+    public void calculateSum (Vector vector) {
+        for (int i = 0; i < Math.min(components.length, vector.components.length); i++) {
+            components[i] += vector.components[i];
+        }
+    }
 }
