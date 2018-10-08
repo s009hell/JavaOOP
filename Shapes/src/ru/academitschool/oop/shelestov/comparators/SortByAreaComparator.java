@@ -1,6 +1,6 @@
-package ru.academitschool.oop.shelestov.work.comparators;
+package ru.academitschool.oop.shelestov.comparators;
 
-import ru.academitschool.oop.shelestov.work.shapes.Shape;
+import ru.academitschool.oop.shelestov.shapes.Shape;
 
 import java.util.Comparator;
 

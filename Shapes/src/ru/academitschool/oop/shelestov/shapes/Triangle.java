@@ -1,4 +1,4 @@
-package ru.academitschool.oop.shelestov.work.shapes;
+package ru.academitschool.oop.shelestov.shapes;
 
 public class Triangle implements Shape{
     private double x1;

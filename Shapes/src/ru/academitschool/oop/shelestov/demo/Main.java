@@ -1,8 +1,8 @@
 package ru.academitschool.oop.shelestov.demo;
 
-import ru.academitschool.oop.shelestov.work.comparators.SortByAreaComparator;
-import ru.academitschool.oop.shelestov.work.comparators.SortByPerimeterComparator;
-import ru.academitschool.oop.shelestov.work.shapes.*;
+import ru.academitschool.oop.shelestov.comparators.SortByAreaComparator;
+import ru.academitschool.oop.shelestov.comparators.SortByPerimeterComparator;
+import ru.academitschool.oop.shelestov.shapes.*;
 
 import java.util.Arrays;
 
