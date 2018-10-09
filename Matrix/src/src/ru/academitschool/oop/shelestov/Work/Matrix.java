@@ -193,4 +193,34 @@ public class Matrix {
 
         return sb.toString();
     }
+
+    public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
+        Matrix matrix = new Matrix(matrix1);
+        return matrix.calculateSum(matrix2);
+    }
+
+    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
+        Matrix matrix = new Matrix(matrix1);
+        return matrix.calculateDifference(matrix2);
+    }
+
+    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
+        Vector[] newVector = new Vector[matrix1.getSize()];
+
+        for (int i = 0; i < matrix1.getSize(); i++) {
+            newVector[i] = new Vector(matrix2.getRowSize());
+
+            for (int j = 0; j < matrix2.getRowSize(); j++) {
+                int sum = 0;
+
+                for (int l = 0; l < matrix1.getRowSize(); l++) {
+                    sum += matrix1.matrix[i].getComponent(l) * matrix2.matrix[l].getComponent(j);
+                }
+
+                newVector[i].setComponent(j, sum);
+            }
+        }
+
+        return new Matrix(newVector);
+    }
 }
