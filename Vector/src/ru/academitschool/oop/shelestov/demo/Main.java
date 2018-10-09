@@ -1,6 +1,6 @@
 package ru.academitschool.oop.shelestov.demo;
-import ru.academitschool.oop.shelestov.work.*;
 
+import ru.academitschool.oop.shelestov.work.*;
 
 public class Main {
     public static void main(String[] args) {
