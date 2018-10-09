@@ -175,4 +175,22 @@ public class Matrix {
 
         return this;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+
+        for (int i = 0; i < getSize(); i++) {
+            sb.append(matrix[i].toString());
+
+            if (i != getSize() - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("}");
+
+        return sb.toString();
+    }
 }

@@ -20,6 +20,7 @@ public class Main {
 
         System.out.println(m2.getDeterminant());
 
+        System.out.println(m2);
 
     }
 }
