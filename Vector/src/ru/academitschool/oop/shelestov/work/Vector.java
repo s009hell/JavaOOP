@@ -25,7 +25,7 @@ public class Vector {
         components = Arrays.copyOf(array, n);
     }
 
-    private int getSize() {
+    public int getSize() {
         return components.length;
     }
 
