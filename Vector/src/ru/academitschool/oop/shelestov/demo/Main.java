@@ -4,7 +4,7 @@ import ru.academitschool.oop.shelestov.work.*;
 
 public class Main {
     public static void main(String[] args) {
-        double[] array = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        double[] array = {1, 1, 1, 1, 1, 1, 1};
         double[] array2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
         Vector v1 = new Vector(5);
@@ -18,18 +18,18 @@ public class Main {
         System.out.println("Сумма векторов:");
         System.out.println(v2);
         System.out.println(v4);
-        v2.calculateSum(v4);
+        v2.sum(v4);
         System.out.println(v2);
 
         System.out.println("Раность векторов векторов:");
         System.out.println(v5);
         System.out.println(v3);
-        v5.calculateDifference(v3);
+        v5.diff(v3);
         System.out.println(v5);
 
         System.out.println("Произведение вектора на 2:");
         System.out.println(v4);
-        v4.calculateMultiplication(2);
+        v4.multiply(2);
         System.out.println(v4);
 
         System.out.println("Разворот вектора:");

@@ -6,8 +6,8 @@ public class Vector {
     private double[] components;
 
     public Vector(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException();
+        if (n <= 0) {
+            throw new IllegalArgumentException("Минимальный размер массива - 1.");
         }
 
         components = new double[n];
@@ -22,6 +22,10 @@ public class Vector {
     }
 
     public Vector(int n, double[] array) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Минимальный размер массива - 1.");
+        }
+
         components = Arrays.copyOf(array, n);
     }
 
@@ -32,12 +36,12 @@ public class Vector {
     private void expand(Vector vector) {
         if (this.getSize() < vector.getSize()) {
             double[] old = this.components;
-            this.components = new double[Math.max(this.getSize(), vector.getSize())];
-            System.arraycopy(old, 0, this.components, 0, old.length);
+            this.components = new double[vector.getSize()];
+            components = Arrays.copyOf(old, vector.getSize());
         }
     }
 
-    public void calculateSum(Vector vector) {
+    public void sum(Vector vector) {
         expand(vector);
 
         for (int i = 0; i < vector.getSize(); ++i) {
@@ -45,7 +49,7 @@ public class Vector {
         }
     }
 
-    public void calculateDifference(Vector vector) {
+    public void diff(Vector vector) {
         expand(vector);
 
         for (int i = 0; i < vector.getSize(); ++i) {
@@ -53,16 +57,14 @@ public class Vector {
         }
     }
 
-    public void calculateMultiplication(double scalar) {
+    public void multiply(double scalar) {
         for (int i = 0; i < components.length; i++) {
             components[i] *= scalar;
         }
     }
 
     public void reverseVector() {
-        for (int i = 0; i < components.length; i++) {
-            components[i] *= -1;
-        }
+        multiply(-1);
     }
 
     public double getLength() {
@@ -77,7 +79,7 @@ public class Vector {
 
     public double getComponent(int index) {
         if (index < 0 || index >= this.getSize()) {
-            throw new IllegalArgumentException();
+            throw new ArrayIndexOutOfBoundsException("Выход за границы индексов массива.");
         }
 
         return components[index];
@@ -85,7 +87,7 @@ public class Vector {
 
     public void setComponent(int index, double value) {
         if (index < 0 || index >= this.getSize()) {
-            throw new IllegalArgumentException();
+            throw new ArrayIndexOutOfBoundsException("Выход за границы индексов массива.");
         }
 
         components[index] = value;
@@ -118,22 +120,23 @@ public class Vector {
 
     public static Vector getSum(Vector vector1, Vector vector2) {
         Vector temp = new Vector(vector1);
-        temp.calculateSum(vector2);
+        temp.sum(vector2);
 
         return temp;
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
         Vector temp = new Vector(vector1);
-        temp.calculateDifference(vector2);
+        temp.diff(vector2);
 
         return temp;
     }
 
     public static double getMultiplication(Vector vector1, Vector vector2) {
         double result = 0;
+        int minSize = Math.min(vector1.getSize(), vector2.getSize());
 
-        for (int i = 0; i < Math.min(vector1.getSize(), vector2.getSize()); i++) {
+        for (int i = 0; i < minSize; i++) {
             result += vector1.components[i] * vector2.components[i];
         }
 

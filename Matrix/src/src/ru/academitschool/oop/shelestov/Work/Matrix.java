@@ -95,7 +95,7 @@ public class Matrix {
     //умножение на скаляр
     public void calculateMultiplication(double scalar) {
         for (int i = 0; i < getSize(); i++) {
-            matrix[i].calculateMultiplication(scalar);
+            matrix[i].multiply(scalar);
         }
     }
 
@@ -161,7 +161,7 @@ public class Matrix {
     //сложение матриц
     public Matrix calculateSum(Matrix ob) {
         for (int i = 0; i < getSize(); i++) {
-            matrix[i].calculateSum(ob.matrix[i]);
+            matrix[i].sum(ob.matrix[i]);
         }
 
         return this;
@@ -170,7 +170,7 @@ public class Matrix {
     //сложение матриц
     public Matrix calculateDifference(Matrix ob) {
         for (int i = 0; i < getSize(); i++) {
-            matrix[i].calculateDifference(ob.matrix[i]);
+            matrix[i].diff(ob.matrix[i]);
         }
 
         return this;
