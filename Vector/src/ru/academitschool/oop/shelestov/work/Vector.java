@@ -18,6 +18,10 @@ public class Vector {
     }
 
     public Vector(double[] array) {
+        if (array.length == 0) {
+            throw new IllegalArgumentException("Минимальный размер массива - 1.");
+        }
+
         components = Arrays.copyOf(array, array.length);
     }
 
@@ -33,11 +37,10 @@ public class Vector {
         return components.length;
     }
 
-    private void expand(Vector vector) {
+    public void expand(Vector vector) {
         if (this.getSize() < vector.getSize()) {
             double[] old = this.components;
-            this.components = new double[vector.getSize()];
-            components = Arrays.copyOf(old, vector.getSize());
+            this.components = Arrays.copyOf(old, vector.getSize());
         }
     }
 

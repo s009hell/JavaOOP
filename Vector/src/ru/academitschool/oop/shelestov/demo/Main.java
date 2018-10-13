@@ -10,6 +10,10 @@ public class Main {
         Vector v1 = new Vector(5);
         System.out.println(v1);
 
+        Vector v15 = new Vector(2);
+        v15.expand(v1);
+        System.out.println(v15);
+
         Vector v2 = new Vector(array);
         Vector v3 = new Vector(v2);
         Vector v4 = new Vector(array2);
