@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //Matrix m1 = new Matrix(3, 4);
+        Matrix m1 = new Matrix(3, 4);
 
         double[][] doubleArray = {
                 {5.0, 9.0, 7.0},
@@ -28,7 +28,7 @@ public class Main {
         };
 
         Matrix m3 = new Matrix(vectorArray);
-        Matrix m1 = new Matrix(m3);
+        m1 = new Matrix(m3);
 
         System.out.println("*** Меню ***");
         System.out.println("1 - Получить вектор-строку по индексу.");
@@ -42,6 +42,8 @@ public class Main {
         System.out.println("9 - Вычитание матриц.");
         System.out.println("10 - Сложение матриц (static).");
         System.out.println("11 - Вычитание матриц (static).");
+        System.out.println("12 - Умножение матриц (static).");
+
 
         System.out.println("0 - Выход.");
         System.out.print("Введите номер пункта меню: ");
@@ -175,6 +177,16 @@ public class Main {
                 System.out.println(m2);
                 System.out.println("Результат вычитания:");
                 System.out.println(Matrix.getDifference(m1, m2));
+                System.out.println();
+                break;
+            case "12":
+                System.out.println();
+                System.out.println("Исходная матрица:");
+                System.out.println(m2);
+                System.out.println("Матрица на которую производится умножение:");
+                System.out.println(m1);
+                System.out.println("Результат умножения:");
+                System.out.println(Matrix.getMultiplication(m2, m1));
                 System.out.println();
                 break;
         }

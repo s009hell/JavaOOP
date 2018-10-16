@@ -192,6 +192,14 @@ public class Matrix {
         return this;
     }
 
+    private Matrix calculateMultiply(Matrix ob) {
+        for (int i = 0; i < getSize(); i++) {
+            matrix[i].multiply(ob.matrix[i]);
+        }
+
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -218,5 +226,10 @@ public class Matrix {
     public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
         Matrix matrix = new Matrix(matrix1);
         return matrix.calculateDifference(matrix2);
+    }
+
+    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
+        Matrix matrix = new Matrix(matrix1);
+        return matrix.calculateMultiply(matrix2);
     }
 }
