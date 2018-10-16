@@ -23,6 +23,10 @@ public class Matrix {
     }
 
     public Matrix(double[][] array) {
+        if (array.length < 1 || array[0].length < 1) {
+            throw new IllegalArgumentException("Недопустимый размер передаваемого массива.");
+        }
+
         matrix = new Vector[array.length];
 
         for (int i = 0; i < array.length; i++) {
@@ -31,6 +35,10 @@ public class Matrix {
     }
 
     public Matrix(Vector[] array) {
+        if (array.length < 1) {
+            throw new IllegalArgumentException("Недопустимый размер передаваемого массива.");
+        }
+
         matrix = new Vector[array.length];
 
         for (int i = 0; i < array.length; i++) {
@@ -51,7 +59,7 @@ public class Matrix {
     //получение вектора-строки по индексу
     public Vector getVector(int index) {
         if (index < 0 || index > matrix.length) {
-            throw new IllegalArgumentException("Недопустимый индекс.");
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
         }
 
         return matrix[index];
@@ -60,7 +68,11 @@ public class Matrix {
     //задание вектора-строки по индексу
     public void setVector(int index, Vector newVector) {
         if (index < 0 || index > matrix.length) {
-            throw new IllegalArgumentException("Недопустимый индекс.");
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
+        }
+
+        if (newVector.getLength() > getRowSize() || newVector.getLength() < 0) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора.");
         }
 
         matrix[index] = newVector;
@@ -69,7 +81,7 @@ public class Matrix {
     //получение вектора-столбца по индексу
     public Vector getColumnVector(int index) {
         if (index < 0 || index > matrix.length) {
-            throw new IllegalArgumentException("Недопустимый индекс.");
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
         }
 
         Vector newVector = new Vector(matrix.length);
@@ -143,6 +155,10 @@ public class Matrix {
 
     //умножение матрицы на вектор
     public Vector getVectorMultiplication(Vector vector) {
+        if (vector.getLength() < 0) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора.");
+        }
+
         Vector newVector = new Vector(getSize());
 
         for (int i = 0; i < getSize(); i++) {
@@ -202,25 +218,5 @@ public class Matrix {
     public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
         Matrix matrix = new Matrix(matrix1);
         return matrix.calculateDifference(matrix2);
-    }
-
-    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
-        Vector[] newVector = new Vector[matrix1.getSize()];
-
-        for (int i = 0; i < matrix1.getSize(); i++) {
-            newVector[i] = new Vector(matrix2.getRowSize());
-
-            for (int j = 0; j < matrix2.getRowSize(); j++) {
-                int sum = 0;
-
-                for (int l = 0; l < matrix1.getRowSize(); l++) {
-                    sum += matrix1.matrix[i].getComponent(l) * matrix2.matrix[l].getComponent(j);
-                }
-
-                newVector[i].setComponent(j, sum);
-            }
-        }
-
-        return new Matrix(newVector);
     }
 }
