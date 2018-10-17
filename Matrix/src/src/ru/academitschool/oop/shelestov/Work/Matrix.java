@@ -87,8 +87,6 @@ public class Matrix {
         return vectorArray[index];
     }
 
-    ==============================================================================
-
     public void setVector(int index, Vector newVector) {
         if (index < 0 || index >= vectorArray.length) {
             throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[0] + 1));
