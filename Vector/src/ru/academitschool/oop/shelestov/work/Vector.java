@@ -60,14 +60,6 @@ public class Vector {
         }
     }
 
-    public void multiply(Vector vector) {
-        expand(vector);
-
-        for (int i = 0; i < vector.getSize(); ++i) {
-            components[i] *= vector.components[i];
-        }
-    }
-
     public void multiply(double scalar) {
         for (int i = 0; i < components.length; i++) {
             components[i] *= scalar;

@@ -1,13 +1,62 @@
 package src.ru.academitschool.oop.shelestov.Demo;
 
 import ru.academitschool.oop.shelestov.work.Vector;
-import src.ru.academitschool.oop.shelestov.Work.Matrix;
+import src.ru.academitschool.oop.shelestov.Work.Matrix2;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Matrix m1 = new Matrix(3, 4);
+
+        Matrix2 m1 = new Matrix2(3,11);
+
+        System.out.println();
+        System.out.println(m1);
+        System.out.println(Arrays.toString(m1.getSize()));
+        System.out.println(m1.getVector(2));
+
+        double[][] dArray = {
+                {1.0, 2.0, 3.0},
+                {4.0, 5.0, 6.0, 7.0, 8.0},
+                {9.0},
+        };
+
+        System.out.println();
+        Matrix2 m2 = new Matrix2(dArray);
+        System.out.println(m2);
+        System.out.println(Arrays.toString(m2.getSize()));
+        System.out.println(m2.getVector(0));
+
+        System.out.println();
+        Matrix2 m3 = new Matrix2(m2);
+        System.out.println(m3);
+        System.out.println(Arrays.toString(m3.getSize()));
+        System.out.println(m3.getVector(2));
+
+        double[] d1 = {11.0, 17.0, 15.0, 19.0, 21.0};
+        double[] d2 = {10.0, 12.0, 14.0};
+        double[] d3 = {9.0};
+
+        Vector[] vArray = {
+                new Vector(d1),
+                new Vector(d2),
+                new Vector(d3),
+        };
+
+        System.out.println();
+        Matrix2 m4 = new Matrix2(vArray);
+        System.out.println(m4);
+        System.out.println(Arrays.toString(m4.getSize()));
+        System.out.println(m4.getVector(1));
+
+        double[] d4 = {11.0, 17.0, 15.0, 19.0, 21.0};
+        Vector v = new Vector(d4);
+
+        m4.setVector(1, v);
+        System.out.println(m4);
+
+        /*Matrix m1 = new Matrix(3, 4);
 
         double[][] doubleArray = {
                 {5.0, 9.0, 7.0},
@@ -189,6 +238,6 @@ public class Main {
                 System.out.println(Matrix.getMultiplication(m2, m1));
                 System.out.println();
                 break;
-        }
+        }*/
     }
 }

@@ -1,82 +1,107 @@
+/*
 package src.ru.academitschool.oop.shelestov.Work;
 
 import ru.academitschool.oop.shelestov.work.*;
 import java.util.Arrays;
 
 public class Matrix {
-    private Vector[] matrix;
+    private Vector[] vectorArray;
 
-    public Matrix(int n, int m) {
-        if (n < 1 || m < 1) {
-            throw new IllegalArgumentException("Недопустимый индекс.");
+    public Matrix(int rowQuantity, int columnQuantity) {
+        if (rowQuantity < 1 || columnQuantity < 1) {
+            throw new IllegalArgumentException("Количество строк или столбцов матрицы не может быть меньше 1.");
         }
 
-        matrix = new Vector[n];
+        vectorArray = new Vector[rowQuantity];
 
-        for (int i = 0; i < n; i++) {
-            matrix[i] = new Vector(m);
+        for (int i = 0; i < rowQuantity; i++) {
+            vectorArray[i] = new Vector(columnQuantity);
         }
     }
 
     public Matrix(Matrix ob) {
-        matrix = Arrays.copyOf(ob.matrix, ob.matrix.length);
-    }
+        vectorArray = new Vector[ob.vectorArray.length];
 
-    public Matrix(double[][] array) {
-        if (array.length < 1 || array[0].length < 1) {
-            throw new IllegalArgumentException("Недопустимый размер передаваемого массива.");
-        }
-
-        matrix = new Vector[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            matrix[i] = new Vector(array[i]);
+        for (int i = 0; i < vectorArray.length; i++) {
+            vectorArray[i] = new Vector(ob.vectorArray[i]);
         }
     }
 
-    public Matrix(Vector[] array) {
-        if (array.length < 1) {
-            throw new IllegalArgumentException("Недопустимый размер передаваемого массива.");
+    public Matrix(double[][] dArray) {
+        boolean isZeroSize = false;
+        int doubleArrayMaxSize = 0;
+
+        for (double[] d : dArray) {
+            if (d.length == 0) {
+                isZeroSize = true;
+                break;
+            } else if (d.length >= doubleArrayMaxSize) {
+                doubleArrayMaxSize = d.length;
+            }
         }
 
-        matrix = new Vector[array.length];
+        if (dArray.length == 0 || isZeroSize) {
+            throw new IllegalArgumentException("Количество строк или столбцов матрицы не может быть меньше 1.");
+        }
 
-        for (int i = 0; i < array.length; i++) {
-            matrix[i] = new Vector(array[i]);
+        vectorArray = new Vector[dArray.length];
+
+        for (int i = 0; i < vectorArray.length; i++) {
+            vectorArray[i] = new Vector(doubleArrayMaxSize, dArray[i]);
         }
     }
 
-    //получение количества строк
-    private int getSize() {
-        return matrix.length;
+    public Matrix(Vector[] vArray) {
+        if (vArray.length < 1) {
+            throw new IllegalArgumentException("Количество строк матрицы не может быть меньше 1.");
+        }
+
+        int vectorMaxSize = 0;
+
+        for (Vector v : vArray) {
+            if (v.getSize() >= vectorMaxSize) {
+                vectorMaxSize = v.getSize();
+            }
+        }
+
+        vectorArray = new Vector[vArray.length];
+
+        for (int i = 0; i < vectorArray.length; i++) {
+            vectorArray[i] = new Vector(vectorMaxSize);
+
+            for (int j = 0; j < vArray[i].getSize(); j++) {
+                vectorArray[i].setComponent(j, vArray[i].getComponent(j));
+            }
+        }
     }
 
-    //получение количества столбцов
-    private int getRowSize() {
-        return matrix[0].getSize();
+    public int[] getSize() {
+        return new int[] {vectorArray.length, vectorArray[0].getSize()};
     }
 
-    //получение вектора-строки по индексу
     public Vector getVector(int index) {
-        if (index < 0 || index > matrix.length) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
+        if (index < 0 || index > vectorArray.length - 1) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше 0 и меньше " + getSize()[0]);
         }
 
-        return matrix[index];
+        return vectorArray[index];
     }
 
-    //задание вектора-строки по индексу
+    ==============================================================================
+
     public void setVector(int index, Vector newVector) {
-        if (index < 0 || index > matrix.length) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
+        if (index < 0 || index >= vectorArray.length) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[0] + 1));
         }
 
-        if (newVector.getLength() > getRowSize() || newVector.getLength() < 0) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора.");
+        if (newVector.getSize() > getSize()[1]) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора. Размер вектора дожен быть меньше " + (getSize()[1] + 1));
         }
 
-        matrix[index] = newVector;
+        vectorArray[index] = new Vector(newVector);
     }
+
+    ==============================================================================
 
     //получение вектора-столбца по индексу
     public Vector getColumnVector(int index) {
@@ -233,3 +258,4 @@ public class Matrix {
         return matrix.calculateMultiply(matrix2);
     }
 }
+*/
