@@ -130,7 +130,7 @@ public class Matrix {
         }
     }
 
-    private double calculateDeterminant(Vector[] matrix) {
+    private double getDeterminant(Vector[] matrix) {
         if (matrix.length == 1) {
             return matrix[0].getComponent(0);
         } else if (matrix.length == 2) {
@@ -161,14 +161,18 @@ public class Matrix {
                 }
             }
 
-            sum += Math.pow(-1, i) * matrix[i].getComponent(0) * calculateDeterminant(array);
+            sum += Math.pow(-1, i) * matrix[i].getComponent(0) * getDeterminant(array);
             exception++;
         }
         return sum;
     }
 
     public double getDeterminant() {
-        return calculateDeterminant(vectorArray);
+        if (getSize()[0] != getSize()[1]) {
+            throw new ArrayIndexOutOfBoundsException("Матрица должна быть квадратной.");
+        }
+
+        return getDeterminant(vectorArray);
     }
 
     public Vector vectorMultiply(Vector vector) {
