@@ -1,8 +1,9 @@
-/*
 package src.ru.academitschool.oop.shelestov.Work;
 
-import ru.academitschool.oop.shelestov.work.*;
+import ru.academitschool.oop.shelestov.work.Vector;
+
 import java.util.Arrays;
+
 
 public class Matrix {
     private Vector[] vectorArray;
@@ -20,7 +21,7 @@ public class Matrix {
     }
 
     public Matrix(Matrix ob) {
-        vectorArray = new Vector[ob.vectorArray.length];
+        vectorArray = new Vector[ob.getSize()[0]];
 
         for (int i = 0; i < vectorArray.length; i++) {
             vectorArray[i] = new Vector(ob.vectorArray[i]);
@@ -75,13 +76,13 @@ public class Matrix {
         }
     }
 
-    public int[] getSize() {
+    private int[] getSize() {
         return new int[] {vectorArray.length, vectorArray[0].getSize()};
     }
 
-    public Vector getVector(int index) {
-        if (index < 0 || index > vectorArray.length - 1) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше 0 и меньше " + getSize()[0]);
+    public Vector getRow(int index) {
+        if (index < 0 || index >= getSize()[0]) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[0]));
         }
 
         return vectorArray[index];
@@ -89,52 +90,46 @@ public class Matrix {
 
     public void setVector(int index, Vector newVector) {
         if (index < 0 || index >= vectorArray.length) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[0] + 1));
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[0]));
         }
 
         if (newVector.getSize() > getSize()[1]) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора. Размер вектора дожен быть меньше " + (getSize()[1] + 1));
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер передаваемого вектора. Размер вектора дожен быть меньше " + (getSize()[1]));
         }
 
         vectorArray[index] = new Vector(newVector);
     }
 
-    ==============================================================================
-
-    //получение вектора-столбца по индексу
-    public Vector getColumnVector(int index) {
-        if (index < 0 || index > matrix.length) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс.");
+    public Vector getColumn(int index) {
+        if (index < 0 || index >= getSize()[1]) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getSize()[1]));
         }
 
-        Vector newVector = new Vector(matrix.length);
+        Vector vector = new Vector(getSize()[0]);
 
-        for (int i = 0; i < matrix.length; i++) {
-            newVector.setComponent(i, matrix[i].getComponent(index));
+        for (int i = 0; i < getSize()[0]; i++) {
+            vector.setComponent(i, vectorArray[i].getComponent(index));
         }
 
-        return newVector;
+        return vector;
     }
 
-    //транспонирование матрицы
     public void transpose() {
-        Vector[] temp = new Vector[getRowSize()];
+        Vector[] temp = new Vector[getSize()[1]];
 
-        for (int i = 0; i < getRowSize(); i++) {
-            temp[i] = new Vector(getColumnVector(i));
+        for (int i = 0; i < getSize()[1]; i++) {
+            temp[i] = getColumn(i);
         }
 
-        matrix = temp;
+        vectorArray = temp;
     }
 
-    //умножение на скаляр
-    public void calculateMultiplication(double scalar) {
-        for (int i = 0; i < getSize(); i++) {
-            matrix[i].multiply(scalar);
+    public void multiply(double scalar) {
+        for (Vector v : vectorArray) {
+            v.multiply(scalar);
         }
     }
 
-    //вычисление определителя матрицы
     private double calculateDeterminant(Vector[] matrix) {
         if (matrix.length == 1) {
             return matrix[0].getComponent(0);
@@ -173,22 +168,21 @@ public class Matrix {
     }
 
     public double getDeterminant() {
-        return calculateDeterminant(matrix);
+        return calculateDeterminant(vectorArray);
     }
 
-    //умножение матрицы на вектор
-    public Vector getVectorMultiplication(Vector vector) {
-        if (vector.getLength() < 0) {
-            throw new ArrayIndexOutOfBoundsException("Недопустимый размер вектора.");
+    public Vector vectorMultiply(Vector vector) {
+        if (vector.getSize() != getSize()[1]) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер передаваемого вектора. Размер вектора дожен быть равен " + (getSize()[1] + 1));
         }
 
-        Vector newVector = new Vector(getSize());
+        Vector newVector = new Vector(getSize()[0]);
 
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < getSize()[0]; i++) {
             double sum = 0;
 
-            for (int j = 0; j < getRowSize(); j++) {
-                sum += matrix[i].getComponent(j) * vector.getComponent(j);
+            for (int j = 0; j < getSize()[1]; j++) {
+                sum += vectorArray[i].getComponent(j) * vector.getComponent(j);
             }
 
             newVector.setComponent(i, sum);
@@ -197,30 +191,60 @@ public class Matrix {
         return newVector;
     }
 
-    //сложение матриц
-    public Matrix calculateSum(Matrix ob) {
-        for (int i = 0; i < getSize(); i++) {
-            matrix[i].sum(ob.matrix[i]);
+    public void calculateSum(Matrix ob) {
+        if (!Arrays.equals(getSize(), ob.getSize())) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер передаваемой матрицы. Размер матрицы должен быть " + (getSize()[0]) + "х" + (getSize()[1]));
         }
 
-        return this;
+        for (int i = 0; i < getSize()[0]; i++) {
+            vectorArray[i].sum(ob.vectorArray[i]);
+        }
     }
 
-    //сложение матриц
-    public Matrix calculateDifference(Matrix ob) {
-        for (int i = 0; i < getSize(); i++) {
-            matrix[i].diff(ob.matrix[i]);
+    public void calculateDiff(Matrix ob) {
+        if (!Arrays.equals(getSize(), ob.getSize())) {
+            throw new ArrayIndexOutOfBoundsException("Недопустимый размер передаваемой матрицы. Размер матрицы должен быть " + (getSize()[0]) + "х" + (getSize()[1]));
         }
 
-        return this;
+        for (int i = 0; i < getSize()[0]; i++) {
+            vectorArray[i].diff(ob.vectorArray[i]);
+        }
     }
 
-    private Matrix calculateMultiply(Matrix ob) {
-        for (int i = 0; i < getSize(); i++) {
-            matrix[i].multiply(ob.matrix[i]);
+    public static Matrix getSumMatrix(Matrix matrix1, Matrix matrix2) {
+        if (!Arrays.equals(matrix1.getSize(), matrix2.getSize())) {
+            throw new ArrayIndexOutOfBoundsException("Размеры матриц должны быть одинакового размера.");
         }
 
-        return this;
+        Matrix matrix = new Matrix(matrix1);
+        matrix.calculateSum(matrix2);
+        return matrix;
+    }
+
+    public static Matrix getDiffMatrix(Matrix matrix1, Matrix matrix2) {
+        if (!Arrays.equals(matrix1.getSize(), matrix2.getSize())) {
+            throw new ArrayIndexOutOfBoundsException("Размеры матриц должны быть одинакового размера.");
+        }
+
+        Matrix matrix = new Matrix(matrix1);
+        matrix.calculateDiff(matrix2);
+        return matrix;
+    }
+
+    public static Matrix getMultiplyMatrix(Matrix matrix1, Matrix matrix2) {
+        if (!Arrays.equals(matrix1.getSize(), matrix2.getSize())) {
+            throw new ArrayIndexOutOfBoundsException("Размеры матриц должны быть одинакового размера.");
+        }
+
+        Matrix matrix = new Matrix(matrix1);
+
+        for (int i = 0; i < matrix.getSize()[0]; i++) {
+            for (int j = 0; j < matrix.getSize()[1]; j++) {
+                matrix.vectorArray[i].setComponent(j, (matrix1.vectorArray[i].getComponent(j) * matrix2.vectorArray[i].getComponent(j)));
+            }
+        }
+
+        return matrix;
     }
 
     @Override
@@ -228,10 +252,10 @@ public class Matrix {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
-        for (int i = 0; i < getSize(); i++) {
-            sb.append(matrix[i].toString());
+        for (int i = 0; i < vectorArray.length; i++) {
+            sb.append(vectorArray[i].toString());
 
-            if (i != getSize() - 1) {
+            if (i != vectorArray.length - 1) {
                 sb.append(", ");
             }
         }
@@ -240,20 +264,4 @@ public class Matrix {
 
         return sb.toString();
     }
-
-    public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
-        Matrix matrix = new Matrix(matrix1);
-        return matrix.calculateSum(matrix2);
-    }
-
-    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
-        Matrix matrix = new Matrix(matrix1);
-        return matrix.calculateDifference(matrix2);
-    }
-
-    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
-        Matrix matrix = new Matrix(matrix1);
-        return matrix.calculateMultiply(matrix2);
-    }
 }
-*/
