@@ -254,6 +254,7 @@ public class Matrix {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
         sb.append("{");
 
         for (int i = 0; i < vectorArray.length; i++) {
