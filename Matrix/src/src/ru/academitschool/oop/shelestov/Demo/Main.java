@@ -153,9 +153,9 @@ public class Main {
         System.out.println("Первая матрица:");
         System.out.println(m3);
         System.out.println("Вторая матрица:");
-        System.out.println(m4);
+        System.out.println(m5);
         System.out.println("Результат: ");
-        System.out.println(Matrix.getMultiplyMatrix(m3, m4));
+        System.out.println(Matrix.getMultiplyMatrix(m3, m5));
         System.out.println();
     }
 }
