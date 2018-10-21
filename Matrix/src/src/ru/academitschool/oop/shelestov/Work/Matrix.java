@@ -245,7 +245,6 @@ public class Matrix {
 
                 for (int j = 0; j < matrix1.getColumnsQuantity(); j++) {
                     piece += matrix1.rows[i].getComponent(j) * matrix2.rows[j].getComponent(k);
-
                 }
 
                 pieceMatrix.rows[i].setComponent(k, piece);
