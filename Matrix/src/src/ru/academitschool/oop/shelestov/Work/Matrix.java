@@ -85,7 +85,7 @@ public class Matrix {
         return rows[index];
     }
 
-    public void setVector(int index, Vector newVector) {
+    public void setRow(int index, Vector newVector) {
         if (index < 0 || index >= rows.length) {
             throw new IndexOutOfBoundsException("Недопустимый индекс. Индек дожен быть больше -1 и меньше " + (getRowsQuantity()));
         }
@@ -180,13 +180,7 @@ public class Matrix {
         Vector newVector = new Vector(getRowsQuantity());
 
         for (int i = 0; i < getRowsQuantity(); i++) {
-            double sum = 0;
-
-            for (int j = 0; j < getColumnsQuantity(); j++) {
-                sum += rows[i].getComponent(j) * vector.getComponent(j);
-            }
-
-            newVector.setComponent(i, sum);
+            newVector.setComponent(i, Vector.getMultiplication(vector, rows[i]));
         }
 
         return newVector;
@@ -240,14 +234,14 @@ public class Matrix {
         Matrix pieceMatrix = new Matrix(matrix1.getRowsQuantity(), matrix2.getColumnsQuantity());
 
         for (int i = 0; i < matrix1.getRowsQuantity(); i++) {
-            for (int k = 0; k < matrix2.getColumnsQuantity(); k++) {
+            for (int j = 0; j < matrix2.getColumnsQuantity(); j++) {
                 double piece = 0;
 
-                for (int j = 0; j < matrix1.getColumnsQuantity(); j++) {
-                    piece += matrix1.rows[i].getComponent(j) * matrix2.rows[j].getComponent(k);
+                for (int k = 0; k < matrix1.getColumnsQuantity(); k++) {
+                    piece += matrix1.rows[i].getComponent(k) * matrix2.rows[k].getComponent(j);
                 }
 
-                pieceMatrix.rows[i].setComponent(k, piece);
+                pieceMatrix.rows[i].setComponent(j, piece);
             }
         }
 

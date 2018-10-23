@@ -58,7 +58,7 @@ public class Main {
         System.out.println(m2);
         System.out.println("Передаваемый вектор:");
         System.out.println(vArray[1]);
-        m2.setVector(2, vArray[1]);
+        m2.setRow(2, vArray[1]);
         System.out.println("Результат: ");
         System.out.println(m2);
         System.out.println();
