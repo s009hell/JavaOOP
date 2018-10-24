@@ -28,13 +28,18 @@ public class Main {
             }
         }
 
+        System.out.println();
+
         /* Есть список из целых чисел. Удалить из него все четные числа. В
         этой задаче новый список создавать нельзя */
+
+        System.out.println("Результат удаления четных чисел:");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
         ArrayList<Integer> firstInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
 
         if (firstInts.isEmpty()) {
-            throw new UnsupportedOperationException("Попытка использования пустого списка.");
+            System.out.println("Список пуст.");
         } else {
             for (int i = 0; i < firstInts.size(); i++) {
                 if (firstInts.get(i) % 2 == 0) {
@@ -42,11 +47,6 @@ public class Main {
                     i--;
                 }
             }
-
-            System.out.println();
-
-            System.out.println("Результат удаления четных чисел:");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
             for (int number : firstInts) {
                 System.out.print(number + " ");
@@ -59,31 +59,22 @@ public class Main {
         повторяться. Надо создать новый список, в котором будут
         элементы первого списка в таком же порядке, но без повторений */
 
+        System.out.println("Результат удаления повторных чисел:");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
         ArrayList<Object> secondInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
         ArrayList<Object> newInts = new ArrayList<>();
 
         if (secondInts.isEmpty()) {
-            throw new UnsupportedOperationException("Попытка использования пустого списка.");
+            System.out.println("Список пуст.");
         } else {
-            boolean isDuplicate;
-
             for (Object obj : secondInts) {
-                isDuplicate = false;
-
-                for (Object newInt : newInts) {
-                    if (obj.equals(newInt)) {
-                        isDuplicate = true;
-                        break;
-                    }
+                if (newInts.contains(obj)) {
+                    continue;
                 }
 
-                if (!isDuplicate) {
-                    newInts.add(obj);
-                }
+                newInts.add(obj);
             }
-
-            System.out.println("Результат удаления повторных чисел:");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
             for (Object obj : newInts) {
                 System.out.print(obj + " ");
