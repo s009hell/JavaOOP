@@ -20,8 +20,12 @@ public class Main {
         System.out.println("Строки из файла:");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        for (String s : strings) {
-            System.out.println(s);
+        if (strings.size() == 0) {
+            System.out.println("Файл пустой.");
+        } else {
+            for (String s : strings) {
+                System.out.println(s);
+            }
         }
 
         System.out.println();
@@ -43,8 +47,8 @@ public class Main {
         System.out.println("Результат удаления четных чисел:");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        for (int i : ints) {
-            System.out.print(i + " ");
+        for (int number : ints) {
+            System.out.print(number + " ");
         }
 
         System.out.println(System.lineSeparator());
