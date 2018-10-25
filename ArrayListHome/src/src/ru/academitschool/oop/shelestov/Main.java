@@ -38,20 +38,14 @@ public class Main {
 
         ArrayList<Integer> firstInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
 
-        if (firstInts.isEmpty()) {
-            System.out.println("Список пуст.");
-        } else {
-            for (int i = 0; i < firstInts.size(); i++) {
-                if (firstInts.get(i) % 2 == 0) {
-                    firstInts.remove(i);
-                    i--;
-                }
-            }
-
-            for (int number : firstInts) {
-                System.out.print(number + " ");
+        for (int i = 0; i < firstInts.size(); i++) {
+            if (firstInts.get(i) % 2 == 0) {
+                firstInts.remove(i);
+                i--;
             }
         }
+
+        System.out.println(firstInts);
 
         System.out.println(System.lineSeparator());
 
@@ -62,23 +56,17 @@ public class Main {
         System.out.println("Результат удаления повторных чисел:");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        ArrayList<Object> secondInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
-        ArrayList<Object> newInts = new ArrayList<>();
+        ArrayList<Integer> secondInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
+        ArrayList<Integer> newInts = new ArrayList<>();
 
-        if (secondInts.isEmpty()) {
-            System.out.println("Список пуст.");
-        } else {
-            for (Object obj : secondInts) {
-                if (newInts.contains(obj)) {
-                    continue;
-                }
-
-                newInts.add(obj);
+        for (Integer number : secondInts) {
+            if (newInts.contains(number)) {
+                continue;
             }
 
-            for (Object obj : newInts) {
-                System.out.print(obj + " ");
-            }
+            newInts.add(number);
         }
+
+        System.out.println(newInts);
     }
 }
