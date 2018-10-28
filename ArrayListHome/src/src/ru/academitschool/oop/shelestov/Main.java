@@ -20,8 +20,12 @@ public class Main {
         System.out.println("Строки из файла:");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        for (String s : strings) {
-            System.out.println(s);
+        if (strings.isEmpty()) {
+            System.out.println("Файл пустой.");
+        } else {
+            for (String s : strings) {
+                System.out.println(s);
+            }
         }
 
         System.out.println();
@@ -29,23 +33,19 @@ public class Main {
         /* Есть список из целых чисел. Удалить из него все четные числа. В
         этой задаче новый список создавать нельзя */
 
-        ArrayList<Integer> ints = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
+        System.out.println("Результат удаления четных чисел:");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        for (int i = 0; i < ints.size(); i++) {
-            if (ints.get(i) % 2 == 0) {
-                ints.remove(i);
+        ArrayList<Integer> firstInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
+
+        for (int i = 0; i < firstInts.size(); i++) {
+            if (firstInts.get(i) % 2 == 0) {
+                firstInts.remove(i);
                 i--;
             }
         }
 
-        System.out.println();
-
-        System.out.println("Результат удаления четных чисел:");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-        for (int i : ints) {
-            System.out.print(i + " ");
-        }
+        System.out.println(firstInts);
 
         System.out.println(System.lineSeparator());
 
@@ -53,24 +53,20 @@ public class Main {
         повторяться. Надо создать новый список, в котором будут
         элементы первого списка в таком же порядке, но без повторений */
 
-        ArrayList<Integer> ints2 = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
-        ArrayList<Integer> newInts = new ArrayList<>();
-
-        newInts.add(ints2.get(0));
-
-        for (int i : ints2) {
-            if (i <= newInts.get(newInts.size() - 1)) {
-                continue;
-            }
-
-            newInts.add(i);
-        }
-
         System.out.println("Результат удаления повторных чисел:");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        for (int i : newInts) {
-            System.out.print(i + " ");
+        ArrayList<Integer> secondInts = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10));
+        ArrayList<Integer> newInts = new ArrayList<>();
+
+        for (Integer number : secondInts) {
+            if (newInts.contains(number)) {
+                continue;
+            }
+
+            newInts.add(number);
         }
+
+        System.out.println(newInts);
     }
 }
