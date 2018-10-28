@@ -1,14 +1,14 @@
 import java.util.List;
 
-public class MyArrayList<T> implements List<T> {
+public class ArrayList<T> implements List<T> {
     private T[] items;
     private int size;
 
-    public MyArrayList() {
+    public ArrayList() {
         this(10);
     }
 
-    public MyArrayList(int capacity) {
+    public ArrayList(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Вместимость не может быть отрицательной или равной 0");
         }
