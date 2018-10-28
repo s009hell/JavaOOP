@@ -10,7 +10,7 @@ public class ArrayList<T> implements List<T> {
 
     public ArrayList(int capacity) {
         if (capacity <= 0) {
-            throw new IllegalArgumentException("Вместимость не может быть отрицательной или равной 0");
+            throw new IllegalArgumentException("Вместимость не может быть отрицательной или равной 0.");
         }
 
         items = (T[]) new Object[capacity];
