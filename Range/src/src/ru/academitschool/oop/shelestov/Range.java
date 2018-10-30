@@ -1,4 +1,4 @@
-package src.ru.academitschool.oop.shelestov.work;
+package src.ru.academitschool.oop.shelestov;
 
 public class Range {
     private double from;

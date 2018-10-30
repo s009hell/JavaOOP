@@ -1,6 +1,6 @@
 package src.ru.academitschool.oop.shelestov.demo;
 
-import src.ru.academitschool.oop.shelestov.work.Range;
+import src.ru.academitschool.oop.shelestov.Range;
 
 import java.util.Scanner;
 
