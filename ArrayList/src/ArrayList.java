@@ -46,7 +46,6 @@ public class ArrayList<T> implements List<T> {
         return false;
     }
 
-    // not needed
     @Override
     public Iterator<T> iterator() {
         return null;
@@ -76,8 +75,16 @@ public class ArrayList<T> implements List<T> {
         return true;
     }
 
+    //normal
     @Override
     public boolean remove(Object o) {
+        int deletedIndex = indexOf(o);
+
+        if (deletedIndex >= 0) {
+            remove(deletedIndex);
+            return true;
+        }
+
         return false;
     }
 
@@ -126,14 +133,38 @@ public class ArrayList<T> implements List<T> {
 
     }
 
+    // normal
     @Override
     public T remove(int index) {
-        return null;
+        if (index < 0 || index > size - 1) {
+            throw new IllegalArgumentException("Некорректный индекс.");
+        }
+
+        T elementTemp = items[index];
+
+        if (index < size - 1) {
+            int numMoved = size - index - 1;
+            System.arraycopy(items, index + 1, items, index, numMoved);
+        }
+
+        items[size - 1] = null;
+        size--;
+
+        return elementTemp;
     }
 
+    // normal
     @Override
     public int indexOf(Object o) {
-        return 0;
+        for (int i = 0; i < size; ++i) {
+            if (!(Objects.equals(items[i], o))) {
+                continue;
+            }
+
+            return i;
+        }
+
+        return -1;
     }
 
     @Override
