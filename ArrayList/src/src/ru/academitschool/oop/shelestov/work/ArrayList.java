@@ -24,7 +24,7 @@ public class ArrayList<T> implements List<T> {
         items = itemsTemp;
     }
 
-    private void trimToSize() {
+    public void trimToSize() {
         if (items.length > size) {
             items = Arrays.copyOf(items, size);
         }

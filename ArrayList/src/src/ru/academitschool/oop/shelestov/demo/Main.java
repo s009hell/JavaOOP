@@ -60,6 +60,14 @@ public class Main {
         al1.add(1, 8);
         System.out.println("add(1, 8): " + al1);
 
+        ArrayList<Integer> al3 = new ArrayList<>();
+        al3.add(1);
+        al3.add(2);
+        al3.add(3);
+        al3.add(4);
+        al3.add(5);
 
+        al3.trimToSize();
+        System.out.println("trimToSize: " + al3);
     }
 }
