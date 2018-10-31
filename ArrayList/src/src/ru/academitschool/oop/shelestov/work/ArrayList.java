@@ -153,9 +153,9 @@ public class ArrayList<T> implements List<T> {
 
         T[] tempArray = (T[]) c.toArray();
 
-        for (int i = 0; i < tempArray.length; i++) {
+        for (T aTempArray : tempArray) {
             for (int j = 0; j < size; j++) {
-                if (Objects.equals(items[j], tempArray[i])) {
+                if (Objects.equals(items[j], aTempArray)) {
                     remove(j);
                     isRemove = true;
                 }
