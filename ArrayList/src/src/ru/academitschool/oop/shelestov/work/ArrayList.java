@@ -45,13 +45,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        for (T element : items) {
-            if (element != null && element.equals(o)) {
-                return true;
-            }
-        }
-
-        return false;
+        return indexOf(o) >= 0;
     }
 
     @Override
@@ -107,10 +101,6 @@ public class ArrayList<T> implements List<T> {
     @Override
     public boolean containsAll(Collection<?> c) {
         T[] tempArray = (T[]) c.toArray();
-
-        if (size < tempArray.length) {
-            return false;
-        }
 
         for (T item : tempArray) {
             if (contains(item)) {
@@ -298,16 +288,19 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
+        //noinspection ConstantConditions
         return null;
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
+        //noinspection ConstantConditions
         return null;
     }
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
+        //noinspection ConstantConditions
         return null;
     }
 }
