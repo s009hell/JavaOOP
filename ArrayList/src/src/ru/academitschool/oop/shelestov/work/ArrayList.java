@@ -15,13 +15,16 @@ public class ArrayList<T> implements List<T> {
             throw new IllegalArgumentException("Вместимость не может быть отрицательной или равной 0.");
         }
 
+        //noinspection unchecked
         items = (T[]) new Object[capacity];
     }
 
-    private void ensureCapacity(int newCapacity) {
-        T[] itemsTemp = (T[]) new Object[newCapacity];
-        System.arraycopy(items, 0, itemsTemp, 0, size);
-        items = itemsTemp;
+    public void ensureCapacity(int newCapacity) {
+        if (newCapacity <= items.length) {
+            return;
+        }
+
+        items = Arrays.copyOf(items, newCapacity);
     }
 
     public void trimToSize() {
@@ -64,6 +67,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public <T1> T1[] toArray(T1[] a) {
         if (a.length < size) {
+            //noinspection unchecked
             return (T1[]) Arrays.copyOf(items, size, a.getClass());
         }
 
@@ -108,8 +112,8 @@ public class ArrayList<T> implements List<T> {
             return false;
         }
 
-        for (T aTempArray : tempArray) {
-            if (contains(aTempArray)) {
+        for (T item : tempArray) {
+            if (contains(item)) {
                 continue;
             }
 
@@ -126,7 +130,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
@@ -170,7 +174,7 @@ public class ArrayList<T> implements List<T> {
         boolean isRetainAll = false;
 
         for (int i = 0; i < size; i++) {
-            if (!(c.contains(items[i]))) {
+            if (!c.contains(items[i])) {
                 remove(i);
                 i++;
                 isRetainAll = true;
@@ -191,7 +195,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
@@ -200,7 +204,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
@@ -211,7 +215,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
@@ -227,7 +231,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
@@ -246,7 +250,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; ++i) {
-            if (!(Objects.equals(items[i], o))) {
+            if (!Objects.equals(items[i], o)) {
                 continue;
             }
 
@@ -259,7 +263,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public int lastIndexOf(Object o) {
         for (int i = size - 1; i >= 0; i--) {
-            if (!(Objects.equals(items[i], o))) {
+            if (!Objects.equals(items[i], o)) {
                 continue;
             }
 
@@ -271,8 +275,25 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public String toString() {
-        String s1 = Arrays.toString(items).replace("[", "{");
-        return s1.replace("]", "}");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        for (int i = 0; i < size; i++) {
+            if (items[i] != null) {
+                sb.append(items[i].toString());
+            } else {
+                sb.append("null");
+            }
+
+            if (i != size - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+
+        return sb.toString();
     }
 
     @Override
