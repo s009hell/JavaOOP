@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> al1 = new ArrayList<>(10);
+        ArrayList<Integer> al1 = new ArrayList<>(5);
         al1.add(1);
         al1.add(2);
         al1.add(3);
@@ -24,11 +24,13 @@ public class Main {
         System.out.println("contains(6): " + al1.contains(6));
         System.out.println("toArray: " + Arrays.toString(al1.toArray()));
 
-        /*Integer[] a = new Integer[10];
+        Integer[] a = new Integer[5];
         System.out.println("toArray(T1[] a): " + Arrays.toString(al1.toArray(a)));
 
         System.out.println("remove((Integer) 3): " + al1.remove((Integer) 3));
         System.out.println("remove(1): " + al1.remove(1));
+
+
 
         ArrayList<Integer> al2 = new ArrayList<>(2);
         al2.add(1);
@@ -72,6 +74,6 @@ public class Main {
         al3.add(5);
 
         al3.trimToSize();
-        System.out.println("trimToSize: " + al3);*/
+        System.out.println("trimToSize: " + al3);
     }
 }

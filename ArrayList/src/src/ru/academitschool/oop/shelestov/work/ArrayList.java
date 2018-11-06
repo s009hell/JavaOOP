@@ -50,13 +50,31 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size && items[currentIndex] != null;
+            }
+
+            @Override
+            public T next() {
+                return items[currentIndex++];
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     @Override
     public Object[] toArray() {
         return Arrays.copyOf(items, size);
     }
+
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
@@ -65,6 +83,7 @@ public class ArrayList<T> implements List<T> {
             return (T1[]) Arrays.copyOf(items, size, a.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(items, 0, a, 0, size);
 
         if (a.length > size) {
@@ -100,14 +119,10 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        T[] tempArray = (T[]) c.toArray();
-
-        for (T item : tempArray) {
-            if (contains(item)) {
-                continue;
+        for (Object item : c) {
+            if (!contains(item)) {
+                return false;
             }
-
-            return false;
         }
 
         return true;
@@ -120,38 +135,38 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
-        T[] tempArray = (T[]) c.toArray();
-
-        if (size + tempArray.length > items.length) {
+        if (size + c.size() > items.length) {
             ensureCapacity(size + c.size());
         }
 
-        if (index != size) {
-            System.arraycopy(items, index, items, index + tempArray.length, size - index);
+        System.arraycopy(items, index, items, index + c.size(), size - index);
+
+        boolean isAdded = false;
+
+        for (T item : c) {
+            items[index] = item;
+            index++;
+            size++;
+            isAdded = true;
         }
 
-        System.arraycopy(tempArray, 0, items, index, tempArray.length);
-
-        size += tempArray.length;
-
-        return true;
+        return isAdded;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean isRemove = false;
 
-        T[] tempArray = (T[]) c.toArray();
-
-        for (T aTempArray : tempArray) {
-            for (int j = 0; j < size; j++) {
-                if (Objects.equals(items[j], aTempArray)) {
-                    remove(j);
+        for (Object item : c) {
+            for (int i = 0; i < size; i++) {
+                if (Objects.equals(items[i], item)) {
+                    remove(i);
                     isRemove = true;
+                    i--;
                 }
             }
         }
@@ -200,7 +215,7 @@ public class ArrayList<T> implements List<T> {
 
         items[index] = element;
 
-        return element;
+        return items[index];
     }
 
     @Override
@@ -240,11 +255,10 @@ public class ArrayList<T> implements List<T> {
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; ++i) {
-            if (!Objects.equals(items[i], o)) {
-                continue;
+            if (Objects.equals(items[i], o)) {
+                return i;
             }
 
-            return i;
         }
 
         return -1;
@@ -254,10 +268,8 @@ public class ArrayList<T> implements List<T> {
     public int lastIndexOf(Object o) {
         for (int i = size - 1; i >= 0; i--) {
             if (!Objects.equals(items[i], o)) {
-                continue;
+                return i;
             }
-
-            return i;
         }
 
         return -1;
