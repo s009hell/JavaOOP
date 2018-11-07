@@ -5,6 +5,7 @@ import java.util.*;
 public class ArrayList<T> implements List<T> {
     private T[] items;
     private int size;
+    boolean isModification = false;
 
     public ArrayList() {
         this(10);
@@ -52,6 +53,7 @@ public class ArrayList<T> implements List<T> {
     public Iterator<T> iterator() {
         return new Iterator<>() {
             private int currentIndex = 0;
+            private int xx = s
 
             @Override
             public boolean hasNext() {
@@ -65,7 +67,8 @@ public class ArrayList<T> implements List<T> {
 
             @Override
             public void remove() {
-                throw new UnsupportedOperationException();
+                ArrayList.this.remove(currentIndex);
+                currentModCount = modCount;
             }
         };
     }
@@ -145,16 +148,14 @@ public class ArrayList<T> implements List<T> {
 
         System.arraycopy(items, index, items, index + c.size(), size - index);
 
-        boolean isAdded = false;
-
         for (T item : c) {
             items[index] = item;
             index++;
-            size++;
-            isAdded = true;
         }
 
-        return isAdded;
+        size += c.size();
+
+        return true;
     }
 
     @Override
@@ -213,14 +214,16 @@ public class ArrayList<T> implements List<T> {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
+        T temp = items[index];
+
         items[index] = element;
 
-        return items[index];
+        return temp;
     }
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
