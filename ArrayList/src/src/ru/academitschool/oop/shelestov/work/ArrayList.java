@@ -57,13 +57,17 @@ public class ArrayList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < size && items[currentIndex] != null;
+                return currentIndex < size - 1;
             }
 
             @Override
             public T next() {
                 if (currentModCount != modCount) {
                     throw new ConcurrentModificationException();
+                }
+
+                if (currentIndex == size - 1) {
+                    throw new NoSuchElementException();
                 }
 
                 currentIndex++;
