@@ -5,7 +5,7 @@ import java.util.*;
 public class ArrayList<T> implements List<T> {
     private T[] items;
     private int size;
-    boolean isModification = false;
+    private int modCount;
 
     public ArrayList() {
         this(10);
@@ -52,8 +52,8 @@ public class ArrayList<T> implements List<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
-            private int currentIndex = 0;
-            private int xx = s
+            private int currentIndex = -1;
+            private int currentModCount = modCount;
 
             @Override
             public boolean hasNext() {
@@ -62,7 +62,12 @@ public class ArrayList<T> implements List<T> {
 
             @Override
             public T next() {
-                return items[currentIndex++];
+                if (currentModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+
+                currentIndex++;
+                return items[currentIndex];
             }
 
             @Override
@@ -104,6 +109,7 @@ public class ArrayList<T> implements List<T> {
 
         items[size] = t;
         size++;
+        modCount++;
 
         return true;
     }
@@ -114,6 +120,7 @@ public class ArrayList<T> implements List<T> {
 
         if (deletedIndex >= 0) {
             remove(deletedIndex);
+            modCount++;
             return true;
         }
 
@@ -154,6 +161,7 @@ public class ArrayList<T> implements List<T> {
         }
 
         size += c.size();
+        modCount++;
 
         return true;
     }
@@ -172,6 +180,8 @@ public class ArrayList<T> implements List<T> {
             }
         }
 
+        modCount++;
+
         return isRemove;
     }
 
@@ -187,6 +197,8 @@ public class ArrayList<T> implements List<T> {
             }
         }
 
+        modCount++;
+
         return isRetainAll;
     }
 
@@ -197,6 +209,7 @@ public class ArrayList<T> implements List<T> {
         }
 
         size = 0;
+        modCount++;
     }
 
     @Override
@@ -215,8 +228,8 @@ public class ArrayList<T> implements List<T> {
         }
 
         T temp = items[index];
-
         items[index] = element;
+        modCount++;
 
         return temp;
     }
@@ -235,6 +248,7 @@ public class ArrayList<T> implements List<T> {
 
         items[index] = element;
         size++;
+        modCount++;
     }
 
     @Override
@@ -251,6 +265,7 @@ public class ArrayList<T> implements List<T> {
 
         items[size - 1] = null;
         size--;
+        modCount++;
 
         return elementTemp;
     }
@@ -261,7 +276,6 @@ public class ArrayList<T> implements List<T> {
             if (Objects.equals(items[i], o)) {
                 return i;
             }
-
         }
 
         return -1;
