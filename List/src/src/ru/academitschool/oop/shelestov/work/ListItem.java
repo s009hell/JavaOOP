@@ -8,24 +8,24 @@ public class ListItem<T> {
         this.data = data;
     }
 
-    public ListItem(T data, ListItem<T> next) {
-        this.data = data;
-        this.next = next;
-    }
-
-    public T getData() {
+    T getData() {
         return data;
     }
 
-    public void setData(T data) {
+    void setData(T data) {
         this.data = data;
     }
 
-    public ListItem<T> getNext() {
+    ListItem<T> getNext() {
         return next;
     }
 
-    public void setNext(ListItem<T> next) {
+    void setNext(ListItem<T> next) {
         this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        return (String) data;
     }
 }

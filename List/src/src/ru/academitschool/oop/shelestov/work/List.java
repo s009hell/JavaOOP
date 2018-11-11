@@ -1,5 +1,6 @@
 package src.ru.academitschool.oop.shelestov.work;
 
+
 import java.util.Objects;
 
 public class List<T> {
@@ -22,7 +23,7 @@ public class List<T> {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
-        return this.getNode(index).getData();
+        return getNode(index).getData();
     }
 
     //изменение значения по указанному индексу
@@ -31,7 +32,7 @@ public class List<T> {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
-        ListItem<T> item = this.getNode(index);
+        ListItem<T> item = getNode(index);
         T oldValue = item.getData();
         item.setData(value);
 
@@ -39,7 +40,11 @@ public class List<T> {
     }
 
     //получение узла по индексу
-    private ListItem<T> getNode(int index) {
+    public ListItem<T> getNode(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Некорректный индекс.");
+        }
+
         ListItem<T> item = head;
 
         for (int i = 0; i < index; i++) {
@@ -51,12 +56,16 @@ public class List<T> {
 
     //удаление элемента по индексу
     public T removeNode(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Некорректный индекс.");
+        }
+
         T oldValue;
 
         if (index == 0) {
-            oldValue = this.removeHead().getData();
+            oldValue = removeHead().getData();
         } else {
-            ListItem<T> previousItem = this.getNode(index - 1);
+            ListItem<T> previousItem = getNode(index - 1);
             ListItem<T> currentItem = previousItem.getNext();
             oldValue = currentItem.getData();
             ListItem<T> nextItem = currentItem.getNext();
@@ -68,9 +77,7 @@ public class List<T> {
     }
 
     //вставка элемента в начало
-    public void addNodeToHead(T value) {
-        ListItem<T> item = new ListItem<>(value);
-
+    public void addNodeToHead(ListItem<T> item) {
         if (head == null) {
             head = item;
         } else {
@@ -82,17 +89,15 @@ public class List<T> {
     }
 
     //вставка элемента по индексу
-    public void addNode(int index, T value) {
-        if (index < 0 || index >= size) {
+    public void addNode(int index, ListItem<T> item) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
-        ListItem<T> item = new ListItem<>(value);
-
         if (index == 0) {
-            this.addNodeToHead(value);
+            addNodeToHead(item);
         } else {
-            ListItem<T> previousItem = this.getNode(index - 1);
+            ListItem<T> previousItem = getNode(index - 1);
             ListItem<T> currentItem = previousItem.getNext();
             previousItem.setNext(item);
             item.setNext(currentItem);
@@ -116,7 +121,7 @@ public class List<T> {
         return false;
     }
 
-    //удаление первого элемента, пусть выдает значение элемента
+    //+++удаление первого элемента, пусть выдает значение элемента
     public ListItem<T> removeHead() {
         ListItem<T> oldItem = head;
         head = head.getNext();
