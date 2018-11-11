@@ -63,11 +63,11 @@ public class ArrayList<T> implements List<T> {
             @Override
             public T next() {
                 if (currentModCount != modCount) {
-                    throw new ConcurrentModificationException();
+                    throw new ConcurrentModificationException("Коллекция изменена.");
                 }
 
                 if (currentIndex == size - 1) {
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException("Элемент не найден.");
                 }
 
                 currentIndex++;
@@ -124,7 +124,6 @@ public class ArrayList<T> implements List<T> {
 
         if (deletedIndex >= 0) {
             remove(deletedIndex);
-            modCount++;
             return true;
         }
 
@@ -153,21 +152,26 @@ public class ArrayList<T> implements List<T> {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
-        if (size + c.size() > items.length) {
-            ensureCapacity(size + c.size());
-        }
+        ensureCapacity(size + c.size());
 
         System.arraycopy(items, index, items, index + c.size(), size - index);
 
+        int tempIndex = index;
+        boolean isChanged = false;
+
         for (T item : c) {
-            items[index] = item;
-            index++;
+            items[tempIndex] = item;
+            tempIndex++;
+            isChanged = true;
         }
 
-        size += c.size();
-        modCount++;
+        if (isChanged) {
+            size += c.size();
+            modCount++;
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -184,8 +188,6 @@ public class ArrayList<T> implements List<T> {
             }
         }
 
-        modCount++;
-
         return isRemove;
     }
 
@@ -200,8 +202,6 @@ public class ArrayList<T> implements List<T> {
                 isRetainAll = true;
             }
         }
-
-        modCount++;
 
         return isRetainAll;
     }
@@ -233,7 +233,6 @@ public class ArrayList<T> implements List<T> {
 
         T temp = items[index];
         items[index] = element;
-        modCount++;
 
         return temp;
     }
