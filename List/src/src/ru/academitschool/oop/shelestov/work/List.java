@@ -1,7 +1,7 @@
 package src.ru.academitschool.oop.shelestov.work;
 
 
-import java.util.Objects;
+import java.util.*;
 
 public class List<T> {
     private int size = 0;
@@ -14,24 +14,20 @@ public class List<T> {
 
     //получение значение первого элемента
     public T getFirstData() {
+        if (size == 0) {
+            throw new NoSuchElementException("Список не содержит элементов.");
+        }
+
         return head.getData();
     }
 
     //получение значения по указанному индексу
     public T getData(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Некорректный индекс.");
-        }
-
         return getNode(index).getData();
     }
 
     //изменение значения по указанному индексу
     public T setData(int index, T value) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Некорректный индекс.");
-        }
-
         ListItem<T> item = getNode(index);
         T oldValue = item.getData();
         item.setData(value);
@@ -40,7 +36,7 @@ public class List<T> {
     }
 
     //получение узла по индексу
-    public ListItem<T> getNode(int index) {
+    private ListItem<T> getNode(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
@@ -77,7 +73,9 @@ public class List<T> {
     }
 
     //вставка элемента в начало
-    public void addNodeToHead(ListItem<T> item) {
+    public void addNodeToHead(T data) {
+        ListItem<T> item = new ListItem<>(data);
+
         if (head == null) {
             head = item;
         } else {
@@ -89,14 +87,15 @@ public class List<T> {
     }
 
     //вставка элемента по индексу
-    public void addNode(int index, ListItem<T> item) {
+    public void addNode(int index, T data) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Некорректный индекс.");
         }
 
         if (index == 0) {
-            addNodeToHead(item);
+            addNodeToHead(data);
         } else {
+            ListItem<T> item = new ListItem<>(data);
             ListItem<T> previousItem = getNode(index - 1);
             ListItem<T> currentItem = previousItem.getNext();
             previousItem.setNext(item);
@@ -107,14 +106,27 @@ public class List<T> {
 
     //удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeNode(T value) {
-        ListItem<T> item = head;
+        if (size == 0) {
+            throw new NoSuchElementException("Список не содержит элементов.");
+        }
 
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(value, item.getData())) {
-                removeNode(i);
+        if (Objects.equals(value, head.getData())) {
+            head = head.getNext();
+            size--;
+            return true;
+        }
+
+        ListItem<T> currentItem = head.getNext();
+        ListItem<T> previousItem = head;
+
+        while (currentItem != null) {
+            if (Objects.equals(value, currentItem.getData())) {
+                previousItem.setNext(currentItem.getNext());
+                size--;
                 return true;
             } else {
-                item = item.getNext();
+                previousItem = currentItem;
+                currentItem = currentItem.getNext();
             }
         }
 
@@ -131,7 +143,7 @@ public class List<T> {
     }
 
     //разворот списка за линейное время
-    public void reverseList() {
+    public void reverse() {
         ListItem<T> previousItem = null;
         ListItem<T> item = head;
 
@@ -146,7 +158,7 @@ public class List<T> {
     }
 
     //копирование списка
-    public List<T> copyList() {
+    public List<T> copy() {
         List<T> newList = new List<>();
 
         if (size == 0) {
@@ -155,7 +167,6 @@ public class List<T> {
 
         ListItem<T> item = new ListItem<>(head.getData());
         newList.head = item;
-        newList.size++;
         ListItem<T> nextItem = head.getNext();
 
         while (nextItem != null) {
@@ -163,13 +174,18 @@ public class List<T> {
             item.setNext(targetItem);
             item = targetItem;
             nextItem = nextItem.getNext();
-            newList.size++;
         }
+
+        newList.size = size;
 
         return newList;
     }
 
     public String toString() {
+        if (size == 0) {
+            return "[Список не содержит элементов.]";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("[");
@@ -181,7 +197,7 @@ public class List<T> {
             item = item.getNext();
         }
 
-        sb.append((item.getData())).append("]");
+        sb.append(item.getData()).append("]");
 
         return sb.toString();
     }
