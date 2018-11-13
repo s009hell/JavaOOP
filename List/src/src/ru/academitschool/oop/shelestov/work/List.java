@@ -73,11 +73,7 @@ public class List<T> {
 
     //вставка элемента в начало
     public void addNodeToHead(T data) {
-        ListItem<T> item = new ListItem<>(data);
-
-        item.setNext(head);
-        head = item;
-
+        head = new ListItem<>(data, head);
         size++;
     }
 
