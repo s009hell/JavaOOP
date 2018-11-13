@@ -3,15 +3,17 @@ package src.ru.academitschool.oop.shelestov.work;
 import java.util.*;
 
 public class HashTable<T> implements Collection<T> {
-    private ArrayList[] table;
+    private ArrayList<T>[] table;
     private int size;
     private int modCount;
 
     public HashTable() {
+        //noinspection unchecked
         table = new ArrayList[16];
     }
 
     public HashTable(int length) {
+        //noinspection unchecked
         table = new ArrayList[length];
     }
 
@@ -19,7 +21,6 @@ public class HashTable<T> implements Collection<T> {
         if (o == null) {
             return 0;
         }
-
 
         return Math.abs(o.hashCode()) % table.length;
     }
@@ -72,7 +73,7 @@ public class HashTable<T> implements Collection<T> {
         };
     }
 
-
+    //+++
     @Override
     public Object[] toArray() {
         Object[] array = new Object[size];
@@ -107,34 +108,94 @@ public class HashTable<T> implements Collection<T> {
         return a;
     }
 
+    //+++
     @Override
     public boolean add(T t) {
-        return false;
+        int index = getHash(t);
+
+        if (table[index] == null) {
+            table[index] = new ArrayList<>();
+        }
+
+        table[index].add(t);
+        size++;
+        modCount++;
+
+        return true;
     }
 
+    //+++
     @Override
     public boolean remove(Object o) {
+        int index = getHash(o);
+
+        if (table[index] == null) {
+            return false;
+        }
+
+        if (table[index].remove(o)) {
+            size--;
+            modCount++;
+
+            return true;
+        }
+
         return false;
     }
 
+    //+++
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for (Object item : c) {
+            if (!contains(item)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
+    //+++
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        boolean isAdded = false;
+
+        for (T item : c) {
+            add(item);
+            isAdded = true;
+        }
+
+        return isAdded;
     }
 
+    //+++
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean isRemove = false;
+
+        for (Object item : c) {
+            remove(item);
+            isRemove = true;
+        }
+
+        return isRemove;
     }
 
+    //+++
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        boolean isRetain = false;
+
+        for (Object item : c) {
+            for (T innerItem : this) {
+                if (!Objects.equals(item, innerItem)) {
+                    remove(innerItem);
+                    isRetain = true;
+                }
+            }
+        }
+
+        return isRetain;
     }
 
     //+++
