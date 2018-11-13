@@ -76,13 +76,11 @@ public class List<T> {
     public void addNodeToHead(T data) {
         ListItem<T> item = new ListItem<>(data);
 
-        if (head == null) {
-            head = item;
-        } else {
+        if (size != 0) {
             item.setNext(head);
-            head = item;
         }
 
+        head = item;
         size++;
     }
 
@@ -107,7 +105,7 @@ public class List<T> {
     //удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeNode(T value) {
         if (size == 0) {
-            throw new NoSuchElementException("Список не содержит элементов.");
+            return false;
         }
 
         if (Objects.equals(value, head.getData())) {
@@ -135,6 +133,10 @@ public class List<T> {
 
     //+++удаление первого элемента, пусть выдает значение элемента
     public ListItem<T> removeHead() {
+        if (size == 0) {
+            throw new NoSuchElementException("Список не содержит элементов.");
+        }
+
         ListItem<T> oldItem = head;
         head = head.getNext();
         size--;

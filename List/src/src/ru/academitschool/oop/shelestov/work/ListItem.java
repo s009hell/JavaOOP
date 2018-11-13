@@ -4,7 +4,7 @@ public class ListItem<T> {
     private T data;
     private ListItem<T> next;
 
-    public ListItem(T data) {
+    ListItem(T data) {
         this.data = data;
     }
 
@@ -26,6 +26,6 @@ public class ListItem<T> {
 
     @Override
     public String toString() {
-        return (String) data;
+        return data.toString();
     }
 }
