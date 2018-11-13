@@ -1,6 +1,5 @@
 package src.ru.academitschool.oop.shelestov.work;
 
-
 public class ListItem<T> {
     private T data;
     private ListItem<T> next;
@@ -27,6 +26,10 @@ public class ListItem<T> {
 
     @Override
     public String toString() {
-        return data.toString();
+        if (data == null) {
+            return "null";
+        } else {
+            return data.toString();
+        }
     }
 }

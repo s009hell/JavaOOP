@@ -75,11 +75,9 @@ public class List<T> {
     public void addNodeToHead(T data) {
         ListItem<T> item = new ListItem<>(data);
 
-        if (size != 0) {
-            item.setNext(head);
-        }
-
+        item.setNext(head);
         head = item;
+
         size++;
     }
 
