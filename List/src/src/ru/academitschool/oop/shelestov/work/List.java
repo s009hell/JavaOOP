@@ -1,6 +1,5 @@
 package src.ru.academitschool.oop.shelestov.work;
 
-
 import java.util.*;
 
 public class List<T> {

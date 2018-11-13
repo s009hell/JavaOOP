@@ -1,5 +1,6 @@
 package src.ru.academitschool.oop.shelestov.work;
 
+
 public class ListItem<T> {
     private T data;
     private ListItem<T> next;

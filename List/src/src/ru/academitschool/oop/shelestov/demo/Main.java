@@ -2,6 +2,7 @@ package src.ru.academitschool.oop.shelestov.demo;
 
 import src.ru.academitschool.oop.shelestov.work.List;
 
+
 public class Main {
     public static void main(String[] args) {
         List<String> list = new List<>();
