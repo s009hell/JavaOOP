@@ -9,7 +9,7 @@ public class HashTable<T> implements Collection<T> {
 
     public HashTable() {
         //noinspection unchecked
-        table = new ArrayList[16];
+        this(16);
     }
 
     public HashTable(int length) {
@@ -25,19 +25,16 @@ public class HashTable<T> implements Collection<T> {
         return Math.abs(o.hashCode()) % table.length;
     }
 
-    //+++
     @Override
     public int size() {
         return size;
     }
 
-    //+++
     @Override
     public boolean isEmpty() {
         return (size == 0);
     }
 
-    //+++
     @Override
     public boolean contains(Object o) {
         int index = getHash(o);
@@ -45,16 +42,17 @@ public class HashTable<T> implements Collection<T> {
         return (size != 0 && table[index] != null && table[index].contains(o));
     }
 
-    //---
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
-            private int currentIndex = -1;
+            private int listIndex = 0;
+            private int elementIndex = -1;
+            private int elementCount = 0;
             private int currentModCount = modCount;
 
             @Override
             public boolean hasNext() {
-                return currentIndex < size - 1;
+                return elementCount < size;
             }
 
             @Override
@@ -63,17 +61,27 @@ public class HashTable<T> implements Collection<T> {
                     throw new ConcurrentModificationException("Коллекция изменена.");
                 }
 
-                if (currentIndex == size - 1) {
+                if (!hasNext()) {
                     throw new NoSuchElementException("Элемент не найден.");
                 }
 
+                if (HashTable.this.table[listIndex] == null || HashTable.this.table[listIndex].size() == 0 || elementIndex >= HashTable.this.table[listIndex].size() - 1) {
+                    elementIndex = -1;
+                    listIndex++;
 
-                return null;
+                    while (HashTable.this.table[listIndex] == null || HashTable.this.table[listIndex].size() == 0) {
+                        listIndex++;
+                    }
+                }
+
+                elementIndex++;
+                elementCount++;
+
+                return HashTable.this.table[listIndex].get(elementIndex);
             }
         };
     }
 
-    //+++
     @Override
     public Object[] toArray() {
         Object[] array = new Object[size];
@@ -90,7 +98,6 @@ public class HashTable<T> implements Collection<T> {
         return array;
     }
 
-    //+++
     @Override
     public <T1> T1[] toArray(T1[] a) {
         if (a.length < size) {
@@ -108,7 +115,6 @@ public class HashTable<T> implements Collection<T> {
         return a;
     }
 
-    //+++
     @Override
     public boolean add(T t) {
         int index = getHash(t);
@@ -124,7 +130,6 @@ public class HashTable<T> implements Collection<T> {
         return true;
     }
 
-    //+++
     @Override
     public boolean remove(Object o) {
         int index = getHash(o);
@@ -143,7 +148,6 @@ public class HashTable<T> implements Collection<T> {
         return false;
     }
 
-    //+++
     @Override
     public boolean containsAll(Collection<?> c) {
         for (Object item : c) {
@@ -155,7 +159,6 @@ public class HashTable<T> implements Collection<T> {
         return true;
     }
 
-    //+++
     @Override
     public boolean addAll(Collection<? extends T> c) {
         boolean isAdded = false;
@@ -168,7 +171,6 @@ public class HashTable<T> implements Collection<T> {
         return isAdded;
     }
 
-    //+++
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean isRemove = false;
@@ -181,7 +183,6 @@ public class HashTable<T> implements Collection<T> {
         return isRemove;
     }
 
-    //+++
     @Override
     public boolean retainAll(Collection<?> c) {
         boolean isRetain = false;
@@ -190,6 +191,7 @@ public class HashTable<T> implements Collection<T> {
             for (T innerItem : this) {
                 if (!Objects.equals(item, innerItem)) {
                     remove(innerItem);
+                    modCount--;
                     isRetain = true;
                 }
             }
@@ -198,7 +200,6 @@ public class HashTable<T> implements Collection<T> {
         return isRetain;
     }
 
-    //+++
     @Override
     public void clear() {
         if (size != 0) {
@@ -209,5 +210,29 @@ public class HashTable<T> implements Collection<T> {
             modCount++;
             size = 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[Список не содержит элементов.]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        for (ArrayList<T> list : table) {
+            if (list == null) {
+                continue;
+            }
+
+            for (T element : list) {
+                sb.append(element);
+                sb.append(", ");
+            }
+        }
+
+        return sb.delete(sb.length() - 2, sb.length()).append("]").toString();
     }
 }

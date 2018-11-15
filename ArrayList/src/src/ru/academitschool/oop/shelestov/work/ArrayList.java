@@ -132,6 +132,16 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
+        if (c == null) {
+            throw new NullPointerException();
+        }
+        if (c.size() == 0) {
+            return true;
+        }
+        if (size == 0) {
+            return false;
+        }
+
         for (Object item : c) {
             if (!contains(item)) {
                 return false;
