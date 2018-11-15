@@ -203,6 +203,7 @@ public class HashTable<T> implements Collection<T> {
         if (size != newSize) {
             size = newSize;
             isRetain = true;
+            modCount++;
         }
 
         return isRetain;
