@@ -205,7 +205,6 @@ public class HashTable<T> implements Collection<T> {
             isRetain = true;
         }
 
-
         return isRetain;
     }
 
