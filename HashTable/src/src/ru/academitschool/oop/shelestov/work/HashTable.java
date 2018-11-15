@@ -8,7 +8,6 @@ public class HashTable<T> implements Collection<T> {
     private int modCount;
 
     public HashTable() {
-        //noinspection unchecked
         this(16);
     }
 
