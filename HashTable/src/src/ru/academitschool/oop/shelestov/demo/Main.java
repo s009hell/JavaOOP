@@ -50,11 +50,16 @@ public class Main {
         System.out.println("Результат: " + ht1);
 
         HashTable<String> ht3 = new HashTable<>(4);
-        ht3.add("4");
-        ht3.add("5");
+        ht3.add("1");
+        ht3.add("2");
 
-        System.out.println("removeAll(4, 5): " + ht1.removeAll(ht3));
+        System.out.println("removeAll(1, 2): " + ht1.removeAll(ht3));
         System.out.println("Результат: " + ht1);
+
+        ht1.add("1");
+        ht1.add("2");
+        ht1.add("1");
+        ht1.add("2");
 
         System.out.println("retainAll(1, 2): " + ht1.retainAll(ht2));
         System.out.println("Результат: " + ht1);

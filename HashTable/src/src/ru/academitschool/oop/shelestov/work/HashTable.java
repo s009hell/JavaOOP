@@ -21,7 +21,7 @@ public class HashTable<T> implements Collection<T> {
             return 0;
         }
 
-        return Math.abs(o.hashCode()) % table.length;
+        return Math.abs(o.hashCode() % table.length);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class HashTable<T> implements Collection<T> {
     public boolean contains(Object o) {
         int index = getHash(o);
 
-        return (size != 0 && table[index] != null && table[index].contains(o));
+        return (table[index] != null && table[index].contains(o));
     }
 
     @Override
@@ -78,6 +78,12 @@ public class HashTable<T> implements Collection<T> {
 
                 return HashTable.this.table[listIndex].get(elementIndex);
             }
+
+            @Override
+            public void remove() {
+                HashTable.this.remove(HashTable.this.table[listIndex].get(elementIndex));
+                currentModCount = modCount;
+            }
         };
     }
 
@@ -85,13 +91,11 @@ public class HashTable<T> implements Collection<T> {
     public Object[] toArray() {
         Object[] array = new Object[size];
 
-        if (size != 0) {
-            int index = 0;
+        int index = 0;
 
-            for (T element : this) {
-                array[index] = element;
-                index++;
-            }
+        for (T element : this) {
+            array[index] = element;
+            index++;
         }
 
         return array;
@@ -175,8 +179,9 @@ public class HashTable<T> implements Collection<T> {
         boolean isRemove = false;
 
         for (Object item : c) {
-            remove(item);
-            isRemove = true;
+            while (remove(item)) {
+                isRemove = true;
+            }
         }
 
         return isRemove;
@@ -186,14 +191,19 @@ public class HashTable<T> implements Collection<T> {
     public boolean retainAll(Collection<?> c) {
         boolean isRetain = false;
 
-        for (Object item : c) {
-            for (T innerItem : this) {
-                if (!Objects.equals(item, innerItem)) {
-                    remove(innerItem);
-                    modCount--;
-                    isRetain = true;
-                }
+        int newSize = 0;
+
+        for (ArrayList<T> item : table) {
+            if (item != null) {
+                item.retainAll(c);
+                newSize += item.size();
             }
+        }
+
+        if (size != newSize) {
+            size = newSize;
+            isRetain = true;
+            modCount++;
         }
 
         return isRetain;
