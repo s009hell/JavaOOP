@@ -1,7 +1,7 @@
 package src.ru.academitschool.oop.shelestov.Demo;
 
 import ru.academitschool.oop.shelestov.work.Vector;
-import src.ru.academitschool.oop.shelestov.Work.Matrix;
+import src.ru.academitschool.oop.shelestov.Matrix;
 
 public class Main {
     public static void main(String[] args) {

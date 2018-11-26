@@ -1,4 +1,4 @@
-package src.ru.academitschool.oop.shelestov.Work;
+package src.ru.academitschool.oop.shelestov;
 
 import ru.academitschool.oop.shelestov.work.Vector;
 
