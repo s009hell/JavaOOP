@@ -1,6 +1,7 @@
 package ru.academitschool.oop.shelestov.demo;
 
 import ru.academitschool.oop.shelestov.work.Person;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class Main {
         Person p9 = new Person("Владимир", 45);
         Person p10 = new Person("Дмитрий", 39);
 
-        ArrayList<Person> persons = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5 ,p6, p7, p8, p9, p10));
+        ArrayList<Person> persons = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
 
         List<String> uniqueNames = persons.stream()
                 .map(Person::getName)
@@ -26,6 +27,8 @@ public class Main {
 
         System.out.println("Имена: " + uniqueNames.stream()
                 .collect(Collectors.joining(", ", "", ".")));
+
+        System.out.println();
 
         OptionalDouble averageAge = persons.stream().filter(person -> person.getAge() < 18)
                 .mapToDouble(Person::getAge)
@@ -38,17 +41,35 @@ public class Main {
             System.out.println("Средний  возраст несовершеннолетних: " + averageAge.getAsDouble());
         }
 
-        Map<String, List<Person>> personsByName = persons.stream().collect(Collectors.groupingBy(Person::getName));
+        System.out.println();
+        System.out.println("Средний возраст по именам: ");
 
-        personsByName.forEach((name, p) -> System.out.printf("%s: %s%n", name, p));
-
-        List<Person> middleYearPersons = persons.stream()
-                .filter(person -> person.getAge() >= 25 && person.getAge() <= 45)
-                .collect(Collectors.toList());
-
-        System.out.println("Люди в возрасте от 25 до 45: " + middleYearPersons.stream()
-                .sorted((per1, per2) -> per2.getAge() - per1.getAge())
+        Map<String, OptionalDouble> middleAgeOfNames = persons.stream()
                 .map(Person::getName)
-                .collect(Collectors.joining(", ", "", ".")));
+                .distinct()
+                .collect(Collectors.toMap(
+                        p -> p,
+                        p -> persons.stream()
+                                .filter(x -> x.getName().equals(p))
+                                .mapToInt(Person::getAge)
+                                .average()));
+
+        middleAgeOfNames.forEach(
+                (name, age) -> {
+                    System.out.print(name + ": ");
+                    age.ifPresent(System.out::print);
+                    System.out.println();
+                });
+
+        System.out.println();
+        System.out.println("Люди в возрасте от 20 до 45 в порядке убывания:");
+
+        String names = persons.stream()
+                .filter(x -> x.getAge() >= 20 && x.getAge() <= 45)
+                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+                .map(Person::getName)
+                .collect(Collectors.joining(", ", "[", "]"));
+
+        System.out.println(names);
     }
 }
