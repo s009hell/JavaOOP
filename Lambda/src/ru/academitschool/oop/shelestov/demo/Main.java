@@ -44,7 +44,6 @@ public class Main {
         System.out.println("Средний возраст по именам: ");
 
         Map<String, Double> middleAgeOfNames = persons.stream().collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
-
         middleAgeOfNames.forEach((name, age) -> System.out.println(name + ": " + age));
 
         System.out.println();
