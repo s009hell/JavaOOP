@@ -34,6 +34,7 @@ public class Main {
         if (averageAge.isEmpty()) {
             System.out.println("Несовершеннолетних в списке персон нет.");
         } else {
+            //noinspection OptionalGetWithoutIsPresent
             System.out.println("Средний  возраст несовершеннолетних: " + averageAge.getAsDouble());
         }
 
