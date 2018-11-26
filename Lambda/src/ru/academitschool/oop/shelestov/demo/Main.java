@@ -37,29 +37,15 @@ public class Main {
         if (averageAge.isEmpty()) {
             System.out.println("Несовершеннолетних в списке персон нет.");
         } else {
-            //noinspection OptionalGetWithoutIsPresent
             System.out.println("Средний  возраст несовершеннолетних: " + averageAge.getAsDouble());
         }
 
         System.out.println();
         System.out.println("Средний возраст по именам: ");
 
-        Map<String, OptionalDouble> middleAgeOfNames = persons.stream()
-                .map(Person::getName)
-                .distinct()
-                .collect(Collectors.toMap(
-                        p -> p,
-                        p -> persons.stream()
-                                .filter(x -> x.getName().equals(p))
-                                .mapToInt(Person::getAge)
-                                .average()));
+        Map<String, Double> middleAgeOfNames = persons.stream().collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
-        middleAgeOfNames.forEach(
-                (name, age) -> {
-                    System.out.print(name + ": ");
-                    age.ifPresent(System.out::print);
-                    System.out.println();
-                });
+        middleAgeOfNames.forEach((name, age) -> System.out.println(name + ": " + age));
 
         System.out.println();
         System.out.println("Люди в возрасте от 20 до 45 в порядке убывания:");
